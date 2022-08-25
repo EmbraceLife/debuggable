@@ -1,0 +1,20 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - README.ipynb
+      - utils.ipynb
+      - section: fastcore
+        contents:
+          - fastcore/classes_metaclasses.ipynb
+          - section: findings
+            contents:
+              - fastcore/findings/00F_delegates_keep.ipynb
+          - section: meta
+            contents:
+              - fastcore/meta/00_delegates.ipynb
+              - fastcore/meta/01_mk_param.ipynb
+              - fastcore/meta/02_use_kwargs_dict.ipynb
+          - section: previous
+            contents:
+              - fastcore/previous/00_delegates.ipynb

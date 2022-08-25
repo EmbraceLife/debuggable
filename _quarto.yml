@@ -1,0 +1,40 @@
+ipynb-filters: [nbdev_filter]
+
+project:
+  type: website
+  output-dir: _docs
+  preview:
+    port: 3000
+    browser: false
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 4
+
+website:
+  title: "debuggable"
+  site-url: "https://EmbraceLife.github.io/debuggable/"
+  description: "make fastai library debuggable on every major line"
+  execute: 
+    enabled: false
+  twitter-card: true
+  open-graph: true
+  reader-mode: true
+  repo-branch: main
+  repo-url: "https://github.com/EmbraceLife/debuggable/"
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+    right:
+      - icon: github
+        href: "https://github.com/EmbraceLife/debuggable/"
+  sidebar:
+    style: "floating"
+
+metadata-files: 
+  - sidebar.yml
+  - custom.yml

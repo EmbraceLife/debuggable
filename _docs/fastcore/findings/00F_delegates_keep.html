@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>debuggable – f_delegates_keep</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">debuggable</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/EmbraceLife/debuggable/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">Fastai Debuggable</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../README.html" class="sidebar-item-text sidebar-link">Fastai Debuggable</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../utils.html" class="sidebar-item-text sidebar-link">debuggable utils</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">fastcore</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/classes_metaclasses.html" class="sidebar-item-text sidebar-link">classes and metaclasses</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">findings</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link active">Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">meta</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/00_delegates.html" class="sidebar-item-text sidebar-link">fastcore.meta.delegates</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/01_mk_param.html" class="sidebar-item-text sidebar-link">fastcore.meta._mk_param</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/02_use_kwargs_dict.html" class="sidebar-item-text sidebar-link">fastcore.meta.use_kwargs_dict</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">previous</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/previous/fastcoremeta.html" class="sidebar-item-text sidebar-link">fastcore_meta</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-from-fastcore.meta.delegates" id="toc-findings-from-fastcore.meta.delegates" class="nav-link active" data-scroll-target="#findings-from-fastcore.meta.delegates">Findings from <span><code>fastcore.meta.delegates</code></span></a>
+  <ul class="collapse">
+  <li><a href="#the-undocumented-feature-of-arg-keep-in-function-delegates" id="toc-the-undocumented-feature-of-arg-keep-in-function-delegates" class="nav-link" data-scroll-target="#the-undocumented-feature-of-arg-keep-in-function-delegates">The undocumented feature of arg <code>keep</code> in function <code>delegates</code></a></li>
+  <li><a href="#the-hidden-or-unexpected-feature-of-keep-of-delegates" id="toc-the-hidden-or-unexpected-feature-of-keep-of-delegates" class="nav-link" data-scroll-target="#the-hidden-or-unexpected-feature-of-keep-of-delegates">The hidden or unexpected feature of <code>keep</code> of <code>delegates</code></a>
+  <ul class="collapse">
+  <li><a href="#mid" id="toc-mid" class="nav-link" data-scroll-target="#mid">mid</a></li>
+  <li><a href="#high" id="toc-high" class="nav-link" data-scroll-target="#high">high</a></li>
+  <li><a href="#mid-1" id="toc-mid-1" class="nav-link" data-scroll-target="#mid-1">mid</a></li>
+  <li><a href="#high-1" id="toc-high-1" class="nav-link" data-scroll-target="#high-1">high</a></li>
+  </ul></li>
+  <li><a href="#is-there-a-legitimate-use-case-for-keeping-both-kwargs-and-the-address-info-of-b" id="toc-is-there-a-legitimate-use-case-for-keeping-both-kwargs-and-the-address-info-of-b" class="nav-link" data-scroll-target="#is-there-a-legitimate-use-case-for-keeping-both-kwargs-and-the-address-info-of-b">Is there a legitimate use case for keeping both <code>**kwargs</code> and the address info of <code>b</code>?</a>
+  <ul class="collapse">
+  <li><a href="#mid-2" id="toc-mid-2" class="nav-link" data-scroll-target="#mid-2">mid</a></li>
+  </ul></li>
+  <li><a href="#can-we-enable-delegates-to-allow-both-keeping-kwargs-and-display-address-info-of-args-from-to" id="toc-can-we-enable-delegates-to-allow-both-keeping-kwargs-and-display-address-info-of-args-from-to" class="nav-link" data-scroll-target="#can-we-enable-delegates-to-allow-both-keeping-kwargs-and-display-address-info-of-args-from-to">Can we enable <code>delegates</code> to allow both keeping <code>**kwargs</code> and display address info of args from <code>to</code>?</a>
+  <ul class="collapse">
+  <li><a href="#mid-3" id="toc-mid-3" class="nav-link" data-scroll-target="#mid-3">mid</a></li>
+  <li><a href="#high-2" id="toc-high-2" class="nav-link" data-scroll-target="#high-2">high</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/EmbraceLife/debuggable/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="findings-from-fastcore.meta.delegates" class="level1">
+<h1>Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></h1>
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.imports <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.meta <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nbdev.showdoc <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.test <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> debuggable.utils <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="the-undocumented-feature-of-arg-keep-in-function-delegates" class="level2">
+<h2 class="anchored" data-anchor-id="the-undocumented-feature-of-arg-keep-in-function-delegates">The undocumented feature of arg <code>keep</code> in function <code>delegates</code></h2>
+<p>The docs of <code>delegates</code> tells us if <code>keep=False</code>, <code>**kwargs</code> of func <code>mid</code> (example below) will be removed; <code>keep=True</code> will keep <code>**kwargs</code> for <code>mid</code>.</p>
+<p>But do you know <code>keep=False</code> has an untold feature, which is <code>keep=False</code> will make sure the <code>mid</code> won’t take any more args from other <code>to</code>s. In other words, after <code>delegates(low, keep=False)(mid)</code>, <code>delegates(low2)(mid)</code> won’t change the signature of <code>mid</code>. This is a useful feature of <code>keep</code> of <code>delegates</code> but not documented.</p>
+<p>In the example below, you can’t delegates args of <code>low2</code> to <code>mid</code> after receiving args from <code>low</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(c, d:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.mid(c, d: int = 1, *, b=1)&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low2(e, f<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>delegates(low2)(mid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.mid(c, d: int = 1, *, b=1)&gt;</code></pre>
+</div>
+</div>
+<p>However, when you set <code>keep=True</code>, <code>**kwargs</code> stays with <code>mid</code> signature, and <code>mid</code> can receive arg <code>g</code> from <code>low2</code> by using <code>delegates</code> again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low, keep<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(c, d:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low2(e, g<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>delegates(low2)(mid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.mid(c, d: int = 1, *, b=1, g=1)&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="the-hidden-or-unexpected-feature-of-keep-of-delegates" class="level2">
+<h2 class="anchored" data-anchor-id="the-hidden-or-unexpected-feature-of-keep-of-delegates">The hidden or unexpected feature of <code>keep</code> of <code>delegates</code></h2>
+<p>When <code>keep=False</code>, <code>show_doc</code> can tell you where <code>b</code> come from in the example below.</p>
+<p>When <code>keep=True</code>, <code>show_doc</code> can’t show the address info of <code>b</code>.</p>
+<p>So, you are out of luck, if you want to keep both <code>**kwargs</code> and display the address info of <code>b</code> at the same time.</p>
+<p>Note: see how <code>f.__delwrap__</code> help <code>showdoc</code> to generate the address info of <code>b</code> from <a href="https://github.com/fastai/nbdev1/blob/675dd1230e0738ecb2bdc505d52a49cf24709a63/nbdev/showdoc.py#L355-L364">here</a>.</p>
+<hr>
+<section id="mid" class="level4">
+<h4 class="anchored" data-anchor-id="mid">mid</h4>
+<blockquote class="blockquote">
+<pre><code> mid (c, d=1, b=1)</code></pre>
+</blockquote>
+<hr>
+</section>
+<section id="high" class="level4">
+<h4 class="anchored" data-anchor-id="high">high</h4>
+<blockquote class="blockquote">
+<pre><code> high (e, f=1, d=1, b=1)</code></pre>
+</blockquote>
+<p>You can keep <code>**kwargs</code>, but you can’t have the address info of <code>b</code> for <code>mid</code>, and <code>d</code> and <code>b</code> for <code>high</code>.</p>
+<hr>
+</section>
+<section id="mid-1" class="level4">
+<h4 class="anchored" data-anchor-id="mid-1">mid</h4>
+<blockquote class="blockquote">
+<pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
+</blockquote>
+<hr>
+</section>
+<section id="high-1" class="level4">
+<h4 class="anchored" data-anchor-id="high-1">high</h4>
+<blockquote class="blockquote">
+<pre><code> high (e, f=1, d=1, b=1, **kwargs)</code></pre>
+</blockquote>
+</section>
+</section>
+<section id="is-there-a-legitimate-use-case-for-keeping-both-kwargs-and-the-address-info-of-b" class="level2">
+<h2 class="anchored" data-anchor-id="is-there-a-legitimate-use-case-for-keeping-both-kwargs-and-the-address-info-of-b">Is there a legitimate use case for keeping both <code>**kwargs</code> and the address info of <code>b</code>?</h2>
+<p>I think so, and here is a case example below.</p>
+<p>The function <code>low</code> need <code>**kwargs</code> to override <code>y</code> from <code>lower</code> and <code>mid</code> needs <code>**kwargs</code> to override <code>b</code> from <code>low</code>. Therefore, <code>**kwargs</code> should be kept using <code>keep=True</code>.</p>
+<p>The signature of <code>mid</code> does not tell us where <code>b</code> is from, it would be useful to show us the address info of <code>b</code>. But the current official <code>delegates</code> doesn’t allow you to have both.</p>
+<p>If you agree this use case is legitimate, then the unexpected feature here is an issue need to be resolved.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lower(x, y<span class="op">=</span><span class="dv">1</span>): <span class="cf">return</span> x <span class="op">+</span> y</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">return</span> lower(a, <span class="op">**</span>kwargs) <span class="op">+</span> b</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low, keep<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">return</span> low(c, <span class="op">**</span>kwargs) <span class="op">+</span> d</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>mid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.mid(c, d=1, *, b=1, **kwargs)&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mid(<span class="dv">1</span>, <span class="dv">1</span>, b<span class="op">=</span><span class="dv">1</span>, y<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>5</code></pre>
+</div>
+</div>
+<hr>
+<section id="mid-2" class="level4">
+<h4 class="anchored" data-anchor-id="mid-2">mid</h4>
+<blockquote class="blockquote">
+<pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
+</blockquote>
+</section>
+</section>
+<section id="can-we-enable-delegates-to-allow-both-keeping-kwargs-and-display-address-info-of-args-from-to" class="level2">
+<h2 class="anchored" data-anchor-id="can-we-enable-delegates-to-allow-both-keeping-kwargs-and-display-address-info-of-args-from-to">Can we enable <code>delegates</code> to allow both keeping <code>**kwargs</code> and display address info of args from <code>to</code>?</h2>
+<p>The cause for disallowing the use case above is <code>keep=True</code> and <code>from_f.__delwrap__</code> are tied together. The problem can be solved if we untie them, and keep <code>from_f.__delwrap__</code> always available to <code>from_f</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>delegates??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> delegates<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">:</span> function <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> but<span class="ansi-blue-fg">:</span> list <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Source:</span>   
+<span class="ansi-green-fg">def</span> delegates<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">:</span>FunctionType<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># Delegatee</span>
+              keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># Keep `kwargs` in decorated function?</span>
+              but<span class="ansi-blue-fg">:</span>list<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-red-fg"># Exclude these parameters from signature</span>
+    <span class="ansi-blue-fg">"Decorator: replace `**kwargs` in signature with params from `to`"</span>
+    <span class="ansi-green-fg">if</span> but <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> but <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">def</span> _f<span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">if</span> to <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> to_f<span class="ansi-blue-fg">,</span>from_f <span class="ansi-blue-fg">=</span> f<span class="ansi-blue-fg">.</span>__base__<span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">,</span>f<span class="ansi-blue-fg">.</span>__init__
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>          to_f<span class="ansi-blue-fg">,</span>from_f <span class="ansi-blue-fg">=</span> to<span class="ansi-blue-fg">.</span>__init__ <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">,</span>type<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">else</span> to<span class="ansi-blue-fg">,</span>f
+        from_f <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__func__'</span><span class="ansi-blue-fg">,</span>from_f<span class="ansi-blue-fg">)</span>
+        to_f <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>to_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__func__'</span><span class="ansi-blue-fg">,</span>to_f<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__delwrap__'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> f
+        sig <span class="ansi-blue-fg">=</span> inspect<span class="ansi-blue-fg">.</span>signature<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">)</span>
+        sigd <span class="ansi-blue-fg">=</span> dict<span class="ansi-blue-fg">(</span>sig<span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">)</span>
+        k <span class="ansi-blue-fg">=</span> sigd<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'kwargs'</span><span class="ansi-blue-fg">)</span>
+        s2 <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span>v<span class="ansi-blue-fg">.</span>replace<span class="ansi-blue-fg">(</span>kind<span class="ansi-blue-fg">=</span>inspect<span class="ansi-blue-fg">.</span>Parameter<span class="ansi-blue-fg">.</span>KEYWORD_ONLY<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span>v <span class="ansi-green-fg">in</span> inspect<span class="ansi-blue-fg">.</span>signature<span class="ansi-blue-fg">(</span>to_f<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">.</span>items<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+              <span class="ansi-green-fg">if</span> v<span class="ansi-blue-fg">.</span>default <span class="ansi-blue-fg">!=</span> inspect<span class="ansi-blue-fg">.</span>Parameter<span class="ansi-blue-fg">.</span>empty <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> sigd <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> but<span class="ansi-blue-fg">}</span>
+        anno <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span>v <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span>v <span class="ansi-green-fg">in</span> to_f<span class="ansi-blue-fg">.</span>__annotations__<span class="ansi-blue-fg">.</span>items<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> sigd <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> but<span class="ansi-blue-fg">}</span>
+        sigd<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>s2<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> keep<span class="ansi-blue-fg">:</span> sigd<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'kwargs'</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> k
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> from_f<span class="ansi-blue-fg">.</span>__delwrap__ <span class="ansi-blue-fg">=</span> to_f
+        from_f<span class="ansi-blue-fg">.</span>__signature__ <span class="ansi-blue-fg">=</span> sig<span class="ansi-blue-fg">.</span>replace<span class="ansi-blue-fg">(</span>parameters<span class="ansi-blue-fg">=</span>sigd<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'__annotations__'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> from_f<span class="ansi-blue-fg">.</span>__annotations__<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>anno<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">return</span> f
+    <span class="ansi-green-fg">return</span> _f
+<span class="ansi-red-fg">File:</span>      ~/mambaforge/lib/python3.9/site-packages/fastcore/meta.py
+<span class="ansi-red-fg">Type:</span>      function
+</pre>
+</div>
+</div>
+</div>
+<p>The two lines of code need alteration which are marked with ‘###’ below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delegates(to<span class="op">=</span><span class="va">None</span>, <span class="co"># Delegatee</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>              keep<span class="op">=</span><span class="va">False</span>, <span class="co"># Keep `kwargs` in decorated function?</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>              but:<span class="bu">list</span><span class="op">=</span><span class="va">None</span>, <span class="co"># Exclude these parameters from signature</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>              verbose<span class="op">=</span><span class="va">True</span>): <span class="co"># Include `to` in docments?</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Decorator: replace `**kwargs` in signature with params from `to`"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> but <span class="kw">is</span> <span class="va">None</span>: but <span class="op">=</span> []</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _f(f):</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> to <span class="kw">is</span> <span class="va">None</span>: to_f,from_f <span class="op">=</span> f.__base__.<span class="fu">__init__</span>,f.<span class="fu">__init__</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:          to_f,from_f <span class="op">=</span> to.<span class="fu">__init__</span> <span class="cf">if</span> <span class="bu">isinstance</span>(to,<span class="bu">type</span>) <span class="cf">else</span> to,f</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        from_f <span class="op">=</span> <span class="bu">getattr</span>(from_f,<span class="st">'__func__'</span>,from_f)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        to_f <span class="op">=</span> <span class="bu">getattr</span>(to_f,<span class="st">'__func__'</span>,to_f)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(from_f,<span class="st">'__delwrap__'</span>) <span class="kw">and</span> keep<span class="op">==</span><span class="va">False</span>: <span class="cf">return</span> f <span class="co">### if you don't want `f` to run delegates again</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        sig <span class="op">=</span> inspect.signature(from_f)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        sigd <span class="op">=</span> <span class="bu">dict</span>(sig.parameters)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> sigd.pop(<span class="st">'kwargs'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        s2 <span class="op">=</span> {k:v.replace(kind<span class="op">=</span>inspect.Parameter.KEYWORD_ONLY) <span class="cf">for</span> k,v <span class="kw">in</span> inspect.signature(to_f).parameters.items()</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> v.default <span class="op">!=</span> inspect.Parameter.empty <span class="kw">and</span> k <span class="kw">not</span> <span class="kw">in</span> sigd <span class="kw">and</span> k <span class="kw">not</span> <span class="kw">in</span> but}</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        sigd.update(s2)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> keep: sigd[<span class="st">'kwargs'</span>] <span class="op">=</span> k </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        from_f.__delwrap__ <span class="op">=</span> to_f <span class="co">### enable show_doc to display the address info for args of `to`</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        from_f.__delopts__ <span class="op">=</span> <span class="bu">dict</span>(verbose<span class="op">=</span>verbose)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>        from_f.__signature__ <span class="op">=</span> sig.replace(parameters<span class="op">=</span>sigd.values())</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> f</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> _f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, you can use <code>keep=True</code> to have both <code>**kwargs</code> and <code>show_doc</code> displaying address info on <code>b</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lower(x, y<span class="op">=</span><span class="dv">1</span>): <span class="cf">return</span> x <span class="op">+</span> y</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">return</span> lower(a, <span class="op">**</span>kwargs) <span class="op">+</span> b</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low, keep<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">return</span> low(c, <span class="op">**</span>kwargs) <span class="op">+</span> d</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.mid(c, d=1, *, b=1, **kwargs)&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mid(<span class="dv">1</span>, <span class="dv">1</span>, b<span class="op">=</span><span class="dv">1</span>, y<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>5</code></pre>
+</div>
+</div>
+<hr>
+<section id="mid-3" class="level4">
+<h4 class="anchored" data-anchor-id="mid-3">mid</h4>
+<blockquote class="blockquote">
+<pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
+</blockquote>
+<p>Now, you can use <code>keep=False</code> to remove <code>**kwargs</code> but <code>show_doc</code> can still display address info of <code>b</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(mid, keep<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> high(e, f<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>high</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.high(e, f=1, *, d=1, b=1)&gt;</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="high-2" class="level4">
+<h4 class="anchored" data-anchor-id="high-2">high</h4>
+<blockquote class="blockquote">
+<pre><code> high (e, f=1, d=1, b=1, **kwargs)</code></pre>
+</blockquote>
+<p>Now, you can use <code>keep=False</code> to not only remove <code>**kwargs</code> but also refuse to use <code>delegates</code> again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>delegates(lower, keep<span class="op">=</span><span class="va">False</span>)(high)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;function __main__.high(e, f=1, *, d=1, b=1)&gt;</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

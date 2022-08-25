@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>debuggable – delegates</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">debuggable</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/EmbraceLife/debuggable/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">Fastai Debuggable</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../README.html" class="sidebar-item-text sidebar-link">Fastai Debuggable</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../utils.html" class="sidebar-item-text sidebar-link">debuggable utils</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">fastcore</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/classes_metaclasses.html" class="sidebar-item-text sidebar-link">classes and metaclasses</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">findings</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link">Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">meta</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/00_delegates.html" class="sidebar-item-text sidebar-link active">fastcore.meta.delegates</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/01_mk_param.html" class="sidebar-item-text sidebar-link">fastcore.meta._mk_param</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/meta/02_use_kwargs_dict.html" class="sidebar-item-text sidebar-link">fastcore.meta.use_kwargs_dict</a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">previous</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../fastcore/previous/fastcoremeta.html" class="sidebar-item-text sidebar-link">fastcore_meta</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fastcore.meta.delegates" id="toc-fastcore.meta.delegates" class="nav-link active" data-scroll-target="#fastcore.meta.delegates">fastcore.meta.delegates</a>
+  <ul class="collapse">
+  <li><a href="#a-personal-docs-on-delegates" id="toc-a-personal-docs-on-delegates" class="nav-link" data-scroll-target="#a-personal-docs-on-delegates">A personal docs on delegates</a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-it" id="toc-when-to-use-it" class="nav-link" data-scroll-target="#when-to-use-it">When to use it?</a></li>
+  <li><a href="#who-are-to-and-f" id="toc-who-are-to-and-f" class="nav-link" data-scroll-target="#who-are-to-and-f">Who are <code>to</code> and <code>f</code>?</a></li>
+  <li><a href="#what-is-kwargs" id="toc-what-is-kwargs" class="nav-link" data-scroll-target="#what-is-kwargs">What is <code>**kwargs</code>?</a></li>
+  <li><a href="#additional-features-with-keep-and-but" id="toc-additional-features-with-keep-and-but" class="nav-link" data-scroll-target="#additional-features-with-keep-and-but">Additional features with <code>keep</code> and <code>but</code></a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-keepfalse" id="toc-when-to-use-keepfalse" class="nav-link" data-scroll-target="#when-to-use-keepfalse">When to use <code>keep=False</code>?</a></li>
+  <li><a href="#when-to-use-keeptrue" id="toc-when-to-use-keeptrue" class="nav-link" data-scroll-target="#when-to-use-keeptrue">when to use <code>keep=True</code>?</a></li>
+  <li><a href="#when-to-use-butd" id="toc-when-to-use-butd" class="nav-link" data-scroll-target="#when-to-use-butd">when to use <code>but=['d']</code>?</a></li>
+  </ul></li>
+  <li><a href="#creating-your-own-examples-to-test-the-boundary-of-usages" id="toc-creating-your-own-examples-to-test-the-boundary-of-usages" class="nav-link" data-scroll-target="#creating-your-own-examples-to-test-the-boundary-of-usages">Creating your own examples to test the boundary of usages</a></li>
+  <li><a href="#debugging-the-error-to-understand-the-source" id="toc-debugging-the-error-to-understand-the-source" class="nav-link" data-scroll-target="#debugging-the-error-to-understand-the-source">debugging the error to understand the source</a></li>
+  </ul></li>
+  <li><a href="#annotation-source" id="toc-annotation-source" class="nav-link" data-scroll-target="#annotation-source">Annotation Source</a></li>
+  <li><a href="#preparing-source-line-and-debugging-codes" id="toc-preparing-source-line-and-debugging-codes" class="nav-link" data-scroll-target="#preparing-source-line-and-debugging-codes">Preparing source line and debugging codes</a>
+  <ul class="collapse">
+  <li><a href="#examples-for-debugging" id="toc-examples-for-debugging" class="nav-link" data-scroll-target="#examples-for-debugging">Examples for debugging</a></li>
+  <li><a href="#debugging-multiline-source-codes-with-dbprints" id="toc-debugging-multiline-source-codes-with-dbprints" class="nav-link" data-scroll-target="#debugging-multiline-source-codes-with-dbprints">debugging multiline source codes with dbprints</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/EmbraceLife/debuggable/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="fastcore.meta.delegates" class="level1">
+<h1>fastcore.meta.delegates</h1>
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.imports <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.meta <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.test <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> debuggable.utils <span class="im">import</span> dbprint, defaults, whichversion, defaults, colorize, insert2debug, dbsrclines</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>today <span class="op">=</span> date.today()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Today's date:"</span>, today)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Today's date: 2022-08-25</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install -U fastcore</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>whichversion(<span class="st">'fastcore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fastcore: 1.5.21 
+Python supercharged for fastai development    
+Jeremy Howard and Sylvain Gugger 
+https://github.com/fastai/fastcore/     
+python_version: &gt;=3.7     
+/Users/Natsume/mambaforge/lib/python3.9/site-packages/fastcore</code></pre>
+</div>
+</div>
+<section id="a-personal-docs-on-delegates" class="level2">
+<h2 class="anchored" data-anchor-id="a-personal-docs-on-delegates">A personal docs on delegates</h2>
+<p>I have been developing a workflow of creating my own docs for fastcore. Here is what I have so far.</p>
+<p>1st step: read and run examples from the official <a href="https://hyp.is/8brb_B42Ee2vbjuvJtjGGw/nbviewer.org/github/fastai/fastcore/blob/master/nbs/07_meta.ipynb">docs</a> to understand how you should use it.</p>
+<p>2nd step: write your own examples to test your understanding of the usages and explore the boundaries to cause errors.</p>
+<p>3rd step: read the source and find out what from the source caused the errors using debugging tools like <code>print</code>, <code>pdb.set_trace</code>, <code>%debug</code>, jupyterlab’s visual debugger etc.</p>
+<p>To keep my docs here readable, I will only present the second step and one or two examples of the third step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pprint(inspect.getsource(delegates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>('def delegates(to:FunctionType=None, # Delegatee\n'
+ '              keep=False, # Keep `kwargs` in decorated function?\n'
+ '              but:list=None): # Exclude these parameters from signature\n'
+ '    "Decorator: replace `**kwargs` in signature with params from `to`"\n'
+ '    if but is None: but = []\n'
+ '    def _f(f):\n'
+ '        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n'
+ '        else:          to_f,from_f = to.__init__ if isinstance(to,type) else '
+ 'to,f\n'
+ "        from_f = getattr(from_f,'__func__',from_f)\n"
+ "        to_f = getattr(to_f,'__func__',to_f)\n"
+ "        if hasattr(from_f,'__delwrap__'): return f\n"
+ '        sig = inspect.signature(from_f)\n'
+ '        sigd = dict(sig.parameters)\n'
+ "        k = sigd.pop('kwargs')\n"
+ '        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in '
+ 'inspect.signature(to_f).parameters.items()\n'
+ '              if v.default != inspect.Parameter.empty and k not in sigd and '
+ 'k not in but}\n'
+ '        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd '
+ 'and k not in but}\n'
+ '        sigd.update(s2)\n'
+ "        if keep: sigd['kwargs'] = k\n"
+ '        else: from_f.__delwrap__ = to_f\n'
+ '        from_f.__signature__ = sig.replace(parameters=sigd.values())\n'
+ "        if hasattr(from_f, '__annotations__'): "
+ 'from_f.__annotations__.update(anno)\n'
+ '        return f\n'
+ '    return _f\n')</code></pre>
+</div>
+</div>
+<section id="when-to-use-it" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-it">When to use it?</h3>
+<p>When <code>f</code> want to replace its <code>**kwargs</code> param with unique kwargs (with their annotations) from <code>to</code>.</p>
+</section>
+<section id="who-are-to-and-f" class="level3">
+<h3 class="anchored" data-anchor-id="who-are-to-and-f">Who are <code>to</code> and <code>f</code>?</h3>
+<p>They can be functions, instance methods, classmethods, and even classes.</p>
+</section>
+<section id="what-is-kwargs" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-kwargs">What is <code>**kwargs</code>?</h3>
+<p>It’s a param of <code>f</code>, to receive unknown keyword args (i.e., not sure how many and what they are) with values. In general, <code>to</code> can tell us what those unkown keyword args for <code>f</code>.</p>
+</section>
+<section id="additional-features-with-keep-and-but" class="level3">
+<h3 class="anchored" data-anchor-id="additional-features-with-keep-and-but">Additional features with <code>keep</code> and <code>but</code></h3>
+<section id="when-to-use-keepfalse" class="level4">
+<h4 class="anchored" data-anchor-id="when-to-use-keepfalse">When to use <code>keep=False</code>?</h4>
+<p><code>f</code> is happy with all the params it got, no more expectation of other kwargs, so remove <code>**kwargs</code> from its signature.</p>
+</section>
+<section id="when-to-use-keeptrue" class="level4">
+<h4 class="anchored" data-anchor-id="when-to-use-keeptrue">when to use <code>keep=True</code>?</h4>
+<p><code>f</code> is not content with all the params it got, and still expect other kwargs in the future when needed.</p>
+</section>
+<section id="when-to-use-butd" class="level4">
+<h4 class="anchored" data-anchor-id="when-to-use-butd">when to use <code>but=['d']</code>?</h4>
+<p><code>f</code> does not want a list of specified kwargs from <code>to</code>, such as <code>d</code> here.</p>
+</section>
+</section>
+<section id="creating-your-own-examples-to-test-the-boundary-of-usages" class="level3">
+<h3 class="anchored" data-anchor-id="creating-your-own-examples-to-test-the-boundary-of-usages">Creating your own examples to test the boundary of usages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># to receive unexpected kwargs, `to` need `**kwargs` too.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low, keep<span class="op">=</span><span class="va">True</span>, but<span class="op">=</span>[<span class="st">'b'</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(a, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>test_sig(mid, <span class="st">'(a, d=1, *, c=1, **kwargs)'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>mid(a<span class="op">=</span><span class="dv">1</span>, d<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">1</span>, e<span class="op">=</span><span class="dv">1</span>) <span class="co"># mid is open to other unexpected kwargs without error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(low) <span class="co"># to as func</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mid(c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>test_sig(mid, <span class="st">'(c, d=1, *, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(low) <span class="co"># to as func</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span> <span class="co"># classmethod() run before delegates()</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid1(cls, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as classmethod</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(clsmid1) <span class="co"># to as classmethod</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid2(cls, c, e<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as classmethod</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid1, <span class="st">'(c, d=1, *, b=1)'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid2, <span class="st">'(c, e=1, *, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(low) <span class="co"># to as func</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid1(cls, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func, not classmethod</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(clsmid1)  <span class="co"># to as classmethod </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid2(cls, c, e<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func, not classmethod</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid1, <span class="st">'(c, d=1, *, b=1)'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid2, <span class="st">'(c, e=1, *, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo1():</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(Foo.clsmid2) <span class="co"># to as classmethod</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> instmid1(<span class="va">self</span>, c, f<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(instmid1) <span class="co"># to as func type</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> instmid2(<span class="va">self</span>, c, g<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> Foo1()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>test_sig(f.instmid1, <span class="st">'(c, f=1, *, e=1, d=1, b=1)'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>test_sig(f.instmid2, <span class="st">'(c, g=1, *, f=1, e=1, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> f(cls, a<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">2</span>): <span class="cf">pass</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(Foo.f) <span class="co"># `to` is a classmethod</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(a, b<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># `f` is a function</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>test_sig(low, <span class="st">'(a, b=1, *, c=2)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(a, b<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(Foo) <span class="co"># `to` is a class</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> low(c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># `f` as function</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>test_sig(low, <span class="st">'(c, d=1, *, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Base(): </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a, b<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Other():</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, e<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(Other)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():    </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__new__</span>(<span class="va">self</span>, g, f<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as a class is ok with either __new__ or __init__</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>test_sig(Foo, <span class="st">'(g, f=1, *, e=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Subcls(Base): <span class="co"># to as a superclass (Base),  to must have __init__, and __new__ won't do. </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">### why?</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># As source code required to use Base.__init__, if it doesn't have it, it will use a wrap-slot __init__, which has no __annotations__, and will</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cause error when __annotations__ is called later.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as class, should have __init__</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>test_sig(Subcls, <span class="st">'(c, d=1, *, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>(Other) <span class="co"># as a normal class, it must have __init__, and __new__ won't do</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():    </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>test_sig(Foo, <span class="st">'(c, d=1, *, e=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>: </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(Other)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> Foo(): <span class="cf">pass</span> <span class="co"># f as a class at least needs to have a signature with **kwargs inside</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">### why? because we expect f to have **kwargs in the source.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>: </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    pprint(inspect.signature(Foo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Signature (c, d=1, *, e=1)&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="debugging-the-error-to-understand-the-source" class="level3">
+<h3 class="anchored" data-anchor-id="debugging-the-error-to-understand-the-source">debugging the error to understand the source</h3>
+</section>
+</section>
+<section id="annotation-source" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-source">Annotation Source</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>delegates??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> delegates<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">:</span> function <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> but<span class="ansi-blue-fg">:</span> list <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Source:</span>   
+<span class="ansi-green-fg">def</span> delegates<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">:</span>FunctionType<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># Delegatee</span>
+              keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># Keep `kwargs` in decorated function?</span>
+              but<span class="ansi-blue-fg">:</span>list<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-red-fg"># Exclude these parameters from signature</span>
+    <span class="ansi-blue-fg">"Decorator: replace `**kwargs` in signature with params from `to`"</span>
+    <span class="ansi-green-fg">if</span> but <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> but <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">def</span> _f<span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">if</span> to <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> to_f<span class="ansi-blue-fg">,</span>from_f <span class="ansi-blue-fg">=</span> f<span class="ansi-blue-fg">.</span>__base__<span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">,</span>f<span class="ansi-blue-fg">.</span>__init__
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>          to_f<span class="ansi-blue-fg">,</span>from_f <span class="ansi-blue-fg">=</span> to<span class="ansi-blue-fg">.</span>__init__ <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">,</span>type<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">else</span> to<span class="ansi-blue-fg">,</span>f
+        from_f <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__func__'</span><span class="ansi-blue-fg">,</span>from_f<span class="ansi-blue-fg">)</span>
+        to_f <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>to_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__func__'</span><span class="ansi-blue-fg">,</span>to_f<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">'__delwrap__'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> f
+        sig <span class="ansi-blue-fg">=</span> inspect<span class="ansi-blue-fg">.</span>signature<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">)</span>
+        sigd <span class="ansi-blue-fg">=</span> dict<span class="ansi-blue-fg">(</span>sig<span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">)</span>
+        k <span class="ansi-blue-fg">=</span> sigd<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'kwargs'</span><span class="ansi-blue-fg">)</span>
+        s2 <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span>v<span class="ansi-blue-fg">.</span>replace<span class="ansi-blue-fg">(</span>kind<span class="ansi-blue-fg">=</span>inspect<span class="ansi-blue-fg">.</span>Parameter<span class="ansi-blue-fg">.</span>KEYWORD_ONLY<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span>v <span class="ansi-green-fg">in</span> inspect<span class="ansi-blue-fg">.</span>signature<span class="ansi-blue-fg">(</span>to_f<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">.</span>items<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+              <span class="ansi-green-fg">if</span> v<span class="ansi-blue-fg">.</span>default <span class="ansi-blue-fg">!=</span> inspect<span class="ansi-blue-fg">.</span>Parameter<span class="ansi-blue-fg">.</span>empty <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> sigd <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> but<span class="ansi-blue-fg">}</span>
+        anno <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span>v <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span>v <span class="ansi-green-fg">in</span> to_f<span class="ansi-blue-fg">.</span>__annotations__<span class="ansi-blue-fg">.</span>items<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> sigd <span class="ansi-green-fg">and</span> k <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> but<span class="ansi-blue-fg">}</span>
+        sigd<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>s2<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> keep<span class="ansi-blue-fg">:</span> sigd<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'kwargs'</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> k
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> from_f<span class="ansi-blue-fg">.</span>__delwrap__ <span class="ansi-blue-fg">=</span> to_f
+        from_f<span class="ansi-blue-fg">.</span>__signature__ <span class="ansi-blue-fg">=</span> sig<span class="ansi-blue-fg">.</span>replace<span class="ansi-blue-fg">(</span>parameters<span class="ansi-blue-fg">=</span>sigd<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>from_f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'__annotations__'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> from_f<span class="ansi-blue-fg">.</span>__annotations__<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>anno<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">return</span> f
+    <span class="ansi-green-fg">return</span> _f
+<span class="ansi-red-fg">File:</span>      ~/mambaforge/lib/python3.9/site-packages/fastcore/meta.py
+<span class="ansi-red-fg">Type:</span>      function
+</pre>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delegatesdb(to:FunctionType<span class="op">=</span><span class="va">None</span>, <span class="co"># Delegatee</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>              keep<span class="op">=</span><span class="va">False</span>, <span class="co"># Keep `kwargs` in decorated function?</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>              but:<span class="bu">list</span><span class="op">=</span><span class="va">None</span>): <span class="co"># Exclude these parameters from signature</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>              <span class="co"># verbose=True): # Include `to` in docments?</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Decorator: replace `**kwargs` in signature with params from `to`"</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"</span><span class="ch">\n</span><span class="co">When `f` overwrite `to` (or simply just want to use</span><span class="ch">\</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">    `to`'s kwargs), it's so convenient to keep `to`'s kwargs inside `f`'s signature instead of just `**kwargs`."</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> but <span class="kw">is</span> <span class="va">None</span>: but <span class="op">=</span> []</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _f(f):</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        block1 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="st">if to is None: to_f,from_f = f.__base__.__init__,f.__init__</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="st">else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        dbprint(block1, <span class="st">"if to is None: when both to and f are classes</span><span class="ch">\n</span><span class="st">if isinstance(to, type): when to is a class"</span>, block1, <span class="st">"to_f"</span>, <span class="st">"from_f"</span>, <span class="op">\</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">"</span><span class="ch">\n</span><span class="st">if to is None:</span><span class="ch">\n</span><span class="st">    to_f,from_f = f.__base__.__init__,f.__init__</span><span class="ch">\n</span><span class="st">    print(f'f.__base__.__init__: </span><span class="sc">{f.__base__.__init__}</span><span class="st">, f.__init__: </span><span class="sc">{f.__init__}</span><span class="st">')</span><span class="ch">\n</span><span class="st">    print(f'to_f: </span><span class="sc">{to_f}</span><span class="st">, from_f: </span><span class="sc">{from_f}</span><span class="st">')</span><span class="ch">\n</span><span class="st">else:</span><span class="ch">\n</span><span class="st">    print(f'to is None : {to is None}')"</span>, <span class="op">\</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">"</span><span class="ch">\n</span><span class="st">if isinstance(to,type):</span><span class="ch">\n</span><span class="st">    to_f,from_f = to.__init__,f</span><span class="ch">\n</span><span class="st">    print(f'to_f: </span><span class="sc">{to_f}</span><span class="st">, from_f: </span><span class="sc">{from_f}</span><span class="st">')</span><span class="ch">\n</span><span class="st">else:</span><span class="ch">\n</span><span class="st">    print(f'isinstance(to,type) : {isinstance(to,type)}')"</span>,<span class="op">\</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"to_f,from_f = to,f"</span>, f<span class="op">=</span>f, to<span class="op">=</span>to)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> to <span class="kw">is</span> <span class="va">None</span>: to_f,from_f <span class="op">=</span> f.__base__.<span class="fu">__init__</span>,f.<span class="fu">__init__</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:          to_f,from_f <span class="op">=</span> to.<span class="fu">__init__</span> <span class="cf">if</span> <span class="bu">isinstance</span>(to,<span class="bu">type</span>) <span class="cf">else</span> to,f</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"from_f = getattr(from_f,'__func__',from_f)"</span>, <span class="st">"This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save"</span>,<span class="op">\</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">"f"</span>, <span class="st">"from_f"</span>, <span class="st">"type(from_f)"</span>,<span class="op">\</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">"try:</span><span class="ch">\n</span><span class="st">    inspect.signature(from_f)</span><span class="ch">\n</span><span class="st">except:</span><span class="ch">\n</span><span class="st">    print('error occurs')</span><span class="ch">\n</span><span class="st">    print(f'is from_f callable: {callable(from_f)}')</span><span class="ch">\n</span><span class="st">else:</span><span class="ch">\n</span><span class="st">    print(inspect.signature(from_f))"</span>, <span class="op">\</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>                <span class="st">"hasattr(from_f, '__func__')"</span>, <span class="st">"from_f = getattr(from_f,'__func__',from_f)"</span>, <span class="st">"from_f"</span>, from_f<span class="op">=</span>from_f, inspect<span class="op">=</span>inspect)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        from_f <span class="op">=</span> <span class="bu">getattr</span>(from_f,<span class="st">'__func__'</span>,from_f)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"to_f = getattr(to_f,'__func__',to_f)"</span>, <span class="st">"This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save"</span>, <span class="op">\</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">"to"</span>, <span class="st">"to_f"</span>, <span class="st">"type(to_f)"</span>,<span class="op">\</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">"try:</span><span class="ch">\n</span><span class="st">    inspect.signature(to_f)</span><span class="ch">\n</span><span class="st">except:</span><span class="ch">\n</span><span class="st">    print('error occurs')</span><span class="ch">\n</span><span class="st">    print(f'is to_f callable: {callable(to_f)}')</span><span class="ch">\n</span><span class="st">else:</span><span class="ch">\n</span><span class="st">    print(inspect.signature(to_f))"</span>, <span class="op">\</span></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>                <span class="st">"hasattr(to_f, '__func__')"</span>, <span class="st">"to_f = getattr(to_f,'__func__',to_f)"</span>, <span class="st">"to_f"</span>, to_f<span class="op">=</span>to_f)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        to_f <span class="op">=</span> <span class="bu">getattr</span>(to_f,<span class="st">'__func__'</span>,to_f)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"if hasattr(from_f,'__delwrap__'): return f"</span>, <span class="st">"If f or from_f has __delwrap__, it means it's happy with all params and give up on **kwargs. So no more params needed from other `to`s"</span>,<span class="op">\</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>                <span class="st">"from_f"</span>, <span class="st">"f"</span>, <span class="st">"hasattr(from_f, '__delwrap__')"</span>, <span class="st">"if hasattr(from_f,'__delwrap__'): return f"</span>,  from_f<span class="op">=</span>from_f, to_f<span class="op">=</span>to_f)</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dbprint("if hasattr(from_f,'__delwrap__'): return f", "If f or from_f has __delwrap__, it means it's happy with all params and give up on **kwargs. So no more params needed from other `to`s",\</span></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         "from_f", "f", "hasattr(from_f, '__delwrap__')",  from_f=from_f, to_f=to_f)</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(from_f,<span class="st">'__delwrap__'</span>): <span class="cf">return</span> f</span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"sig = inspect.signature(from_f)"</span>, <span class="st">""</span>, <span class="st">"sig = inspect.signature(from_f)"</span>, <span class="st">"inspect.signature(from_f)"</span>, inspect<span class="op">=</span>inspect)</span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>        sig <span class="op">=</span> inspect.signature(from_f)</span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"sigd = dict(sig.parameters)"</span>, <span class="st">""</span>, <span class="st">"sigd = dict(sig.parameters)"</span>, <span class="st">"sig.parameters"</span>, <span class="st">"dict(sig.parameters)"</span>, sig<span class="op">=</span>sig)</span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a>        sigd <span class="op">=</span> <span class="bu">dict</span>(sig.parameters)</span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># remove the item {'kwargs': &lt;Parameter "**kwargs"&gt;} out of sigd</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"k = sigd.pop('kwargs')"</span>, <span class="st">""</span>, <span class="st">"sigd"</span>, <span class="st">"k = sigd.pop('kwargs')"</span>, <span class="st">"sigd"</span>, <span class="st">"sigd['kwargs'] = k"</span>, sigd<span class="op">=</span>sigd)</span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> sigd.pop(<span class="st">'kwargs'</span>)</span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># build a dict and pick the right keyword args with values into it</span></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a>        block2 <span class="op">=</span> <span class="st">"""s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         </span></span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="st">              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}"""</span></span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>        dbprint(block2, <span class="st">""</span>, block2, <span class="st">"s2"</span>, <span class="st">"for k,v in inspect.signature(to_f).parameters.items():"</span>, <span class="st">"sigd"</span>, <span class="st">"but"</span>, <span class="op">\</span></span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>                <span class="st">"for k,v in inspect.signature(to_f).parameters.items():</span><span class="ch">\n</span><span class="st">    print(f'v.default: </span><span class="sc">{v.default}</span><span class="st">')</span><span class="ch">\n</span><span class="st">    print(f'v.default != inspect.Parameter.empty: {v.default != inspect.Parameter.empty}')</span><span class="ch">\n</span><span class="st">    print(f'k not in sigd: {k not in sigd}')</span><span class="ch">\n</span><span class="st">    print(f'k not in but: {k not in but}')"</span>, <span class="op">\</span></span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a>                to_f<span class="op">=</span>to_f, but<span class="op">=</span>but)</span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a>        s2 <span class="op">=</span> {k:v.replace(kind<span class="op">=</span>inspect.Parameter.KEYWORD_ONLY) <span class="cf">for</span> k,v <span class="kw">in</span> inspect.signature(to_f).parameters.items()</span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>              <span class="cf">if</span> v.default <span class="op">!=</span> inspect.Parameter.empty <span class="kw">and</span> k <span class="kw">not</span> <span class="kw">in</span> sigd <span class="kw">and</span> k <span class="kw">not</span> <span class="kw">in</span> but}</span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}"</span>, <span class="st">""</span>, <span class="op">\</span></span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a>                <span class="st">"anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}"</span>, <span class="st">"anno"</span>,<span class="op">\</span></span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a>                <span class="st">"for k,v in to_f.__annotations__.items():"</span>, <span class="st">"sigd"</span>, <span class="st">"but"</span>)</span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>        anno <span class="op">=</span> {k:v <span class="cf">for</span> k,v <span class="kw">in</span> to_f.__annotations__.items() <span class="cf">if</span> k <span class="kw">not</span> <span class="kw">in</span> sigd <span class="kw">and</span> k <span class="kw">not</span> <span class="kw">in</span> but}     </span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"sigd.update(s2)"</span>, <span class="st">""</span>, <span class="st">"s2"</span>, <span class="st">"sigd"</span>, <span class="st">"sigd.update(s2)"</span>, <span class="st">"sigd"</span>, s2<span class="op">=</span>s2)</span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a>        sigd.update(s2)                                                   </span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a>        block3 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a><span class="st">if keep: sigd['kwargs'] = k</span></span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a><span class="st">else: from_f.__delwrap__ = to_f</span></span>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span></span>
+<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a>        dbprint(block3, <span class="st">""</span>, <span class="st">"k"</span>, <span class="st">"keep"</span>, <span class="st">"sigd"</span>, <span class="st">"to_f"</span>, <span class="st">"getattr(from_f, '__delwrap__', None)"</span>, <span class="op">\</span></span>
+<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a>                <span class="st">"if keep:</span><span class="ch">\n</span><span class="st">    sigd['kwargs'] = k</span><span class="ch">\n</span><span class="st">else:</span><span class="ch">\n</span><span class="st">    from_f.__delwrap__ = to_f"</span>, <span class="st">"sigd"</span>, <span class="st">"from_f.__delwrap__"</span>, k<span class="op">=</span>k, keep<span class="op">=</span>keep)</span>
+<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> keep: sigd[<span class="st">'kwargs'</span>] <span class="op">=</span> k</span>
+<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: from_f.__delwrap__ <span class="op">=</span> to_f</span>
+<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"from_f.__signature__ = sig.replace(parameters=sigd.values())"</span>, <span class="st">""</span>, <span class="st">"getattr(from_f, '__signature__', None)"</span>, <span class="st">"sig"</span>, <span class="st">"sigd.values()"</span>, <span class="op">\</span></span>
+<span id="cb21-80"><a href="#cb21-80" aria-hidden="true" tabindex="-1"></a>               <span class="st">"inspect.getdoc(sig.replace)"</span>, <span class="st">"from_f.__signature__ = sig.replace(parameters=sigd.values())"</span>, <span class="op">\</span></span>
+<span id="cb21-81"><a href="#cb21-81" aria-hidden="true" tabindex="-1"></a>                <span class="st">"getattr(from_f, '__signature__', None)"</span>, sigd<span class="op">=</span>sigd)</span>
+<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a>        from_f.__signature__ <span class="op">=</span> sig.replace(parameters<span class="op">=</span>sigd.values())</span>
+<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a>        dbprint(<span class="st">"if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)"</span>, <span class="st">""</span>, <span class="st">"anno"</span>, <span class="st">"getattr(from_f, '__annotations__', None)"</span>, <span class="op">\</span></span>
+<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a>                <span class="st">"if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)"</span>, <span class="st">"getattr(from_f, '__annotations__', None)"</span>, from_f<span class="op">=</span>from_f, anno<span class="op">=</span>anno)</span>
+<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(from_f, <span class="st">'__annotations__'</span>): from_f.__annotations__.update(anno)                                                                           </span>
+<span id="cb21-87"><a href="#cb21-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> f                                                                                                                                             </span>
+<span id="cb21-88"><a href="#cb21-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> _f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.meta <span class="im">import</span> delegates <span class="im">as</span> dg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>defaults.src <span class="op">=</span> inspect.getsource(dg) <span class="co"># user input, must have</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>defaults.deb <span class="op">=</span> inspect.getsource(delegatesdb) <span class="co"># user input, must have</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>defaults.checksource() <span class="co"># user input, must have</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def delegates(to:FunctionType=None, # Delegatee==============================================================================================================
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__                                                                                          
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f                                                                            
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             </code></pre>
+</div>
+</div>
+</section>
+<section id="preparing-source-line-and-debugging-codes" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-source-line-and-debugging-codes">Preparing source line and debugging codes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>srcname <span class="op">=</span> <span class="st">"delegates"</span>  <span class="co"># user input</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># srcdbps = defaults.src2dbp.delegates # user input</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>srcdbps <span class="op">=</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect.getsource(eval(srcname)).split('\n')</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>defaults.src??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Type:</span>        str
+<span class="ansi-red-fg">String form:</span>
+def delegates(to:FunctionType=None, # Delegatee
+              keep=False, # Keep `kwargs` in decorated function?
+              but:list=None): # Exclude these parameters from signature
+    "Decorator: replace `**kwargs` in signature with params from `to`"
+    if but is None: but = []
+    def _f(f):
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f
+        from_f = getattr(from_f,'__func__',from_f)
+        to_f = getattr(to_f,'__func__',to_f)
+        if hasattr(from_f,'__delwrap__'): return f
+        sig = inspect.signature(from_f)
+        sigd = dict(sig.parameters)
+        k = sigd.pop('kwargs')
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}
+        sigd.update(s2)
+        if keep: sigd['kwargs'] = k
+        else: from_f.__delwrap__ = to_f
+        from_f.__signature__ = sig.replace(parameters=sigd.values())
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)
+        return f
+    return _f
+<span class="ansi-red-fg">Length:</span>      1289
+<span class="ansi-red-fg">Docstring:</span>  
+str(object='') -&gt; str
+str(bytes_or_buffer[, encoding[, errors]]) -&gt; str
+Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.__str__() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.
+</pre>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>srcline <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">        if to is None: to_f,from_f = f.__base__.__init__,f.__init__</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># watch out: to convert srcline into actual strings for the first arg in dbprint, use '\\n\' instead of just '\n'</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>dbcode <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__</span><span class="ch">\\</span><span class="st">n\        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f",</span><span class="ch">\</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">"if to is None: when both to and f are classes.</span><span class="ch">\\</span><span class="st">nIf isinstance(to, type): when to is a class",</span><span class="ch">\</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">"if to is None:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">    to_f,from_f = f.__base__.__init__,f.__init__</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">else:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="st">    to_f,from_f = to.__init__ if isinstance(to,type) else to,f",</span><span class="ch">\</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="st">"to_f", "from_f", "hasattr(to_f, '__annotations__')", "hasattr(from_f, '__annotations__')", </span><span class="ch">\</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="st">f=f, to=to)</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">"        if to is None: to_f,from_f = f.__base__.__init__,f.__init__</span><span class="ch">\n</span><span class="co">        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>srcdbps.append([(srcline, dbcode)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>srcline <span class="op">=</span> <span class="st">"        if hasattr(from_f,</span><span class="ch">\'</span><span class="st">__delwrap__</span><span class="ch">\'</span><span class="st">): return f"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dbcode <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">        dbprint("if hasattr(from_f,'__delwrap__'): return f", </span><span class="ch">\</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">"If f or from_f has __delwrap__, it means it's happy with all params and give up on **kwargs. So no more params needed from other `to`s", </span><span class="ch">\</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">"from_f", "f", "hasattr(from_f, '__delwrap__')", "if hasattr(from_f,'__delwrap__'): return f", from_f=from_f, f=f)</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>srcdbps.append([(srcline, dbcode)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Watch out: using \\n instead of \n inside a block</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>srcline <span class="op">=</span> <span class="st">"        to_f = getattr(to_f,'__func__',to_f)"</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>dbcode <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">        dbprint(srcline, </span><span class="ch">\</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="st">"This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save", </span><span class="ch">\</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="st">"to", "to_f", "type(to_f)", </span><span class="ch">\</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="st">"try:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="st">    inspect.signature(to_f)</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="st">except:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="st">    print('error occurs')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f'is to_f callable: {callable(to_f)}')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="st">else:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="st">    print(inspect.signature(to_f))",</span><span class="ch">\</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="st">"hasattr(to_f, '__func__')", "to_f = getattr(to_f,'__func__',to_f)", to_f=to_f, to=to) </span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>srcdbps.append([(srcline, dbcode)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">"        from_f = getattr(from_f,'__func__',from_f)</span><span class="ch">\\</span><span class="co">n\        to_f = getattr(to_f,'__func__',to_f)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>"        from_f = getattr(from_f,'__func__',from_f)\\n\\        to_f = getattr(to_f,'__func__',to_f)"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>srcline <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="st">        from_f = getattr(from_f,'__func__',from_f)</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">        to_f = getattr(to_f,'__func__',to_f)</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>dbcode <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">        dbprint("        from_f = getattr(from_f,'__func__',from_f)</span><span class="ch">\\</span><span class="st">n\        to_f = getattr(to_f,'__func__',to_f)",</span><span class="ch">\</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="st">"This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save",</span><span class="ch">\</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="st">"f", "from_f", "type(from_f)",</span><span class="ch">\</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="st">"try:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="st">    inspect.signature(from_f)</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="st">except:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="st">    print('error occurs')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f'is from_f callable: {callable(from_f)}')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="st">else:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="st">    print(inspect.signature(from_f))", </span><span class="ch">\</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="st">"hasattr(from_f, '__func__')", "from_f = getattr(from_f,'__func__',from_f)", "from_f",</span><span class="ch">\</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="st">"to", "to_f", "type(to_f)",</span><span class="ch">\</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="st">"try:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="st">    inspect.signature(to_f)</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="st">except:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="st">    print('error occurs')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f'is to_f callable: {callable(to_f)}')</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="st">else:</span><span class="ch">\\</span><span class="st">n</span><span class="ch">\</span></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a><span class="st">    print(inspect.signature(to_f))", </span><span class="ch">\</span></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="st">"hasattr(to_f, '__func__')", "to_f = getattr(to_f,'__func__',to_f)", "to_f",</span><span class="ch">\</span></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="st">from_f=from_f, to_f=to_f, f=f, to=to, srcline=srcline)</span></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Importance: must include all necessary env into the dbprint function above. Note, we don't need inspect=inspect because utils has exported `import inspect`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>srcdbps.append([(srcline, dbcode)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>defaults.src2dbp.delegates <span class="op">=</span> srcdbps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pprint(srcdbps, width<span class="op">=</span><span class="dv">157</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[('\n'
+   '        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n'
+   '        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f\n',
+   '\n'
+   '\n'
+   '        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\\n\\        else:          to_f,from_f = to.__init__ if '
+   'isinstance(to,type) else to,f","if to is None: when both to and f are classes.\\nIf isinstance(to, type): when to is a class","if to is None:\\n    '
+   'to_f,from_f = f.__base__.__init__,f.__init__\\nelse:\\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '
+   '\'__annotations__\')", "hasattr(from_f, \'__annotations__\')", f=f, to=to)\n')],
+ [("        if hasattr(from_f,'__delwrap__'): return f",
+   '\n'
+   '        dbprint("if hasattr(from_f,\'__delwrap__\'): return f", "If f or from_f has __delwrap__, it means it\'s happy with all params and give up on '
+   '**kwargs. So no more params needed from other `to`s", "from_f", "f", "hasattr(from_f, \'__delwrap__\')", "if hasattr(from_f,\'__delwrap__\'): return '
+   'f", from_f=from_f, f=f)\n')],
+ [("        to_f = getattr(to_f,'__func__',to_f)",
+   '\n'
+   '\n'
+   '        dbprint(srcline, "This line is for classmethod, as it is not callable, so inspect.signature(...) won\'t work, but it has __func__ to save", '
+   '"to", "to_f", "type(to_f)", "try:\\n    inspect.signature(to_f)\\nexcept:\\n    print(\'error occurs\')\\n    print(f\'is to_f callable: '
+   '{callable(to_f)}\')\\nelse:\\n    print(inspect.signature(to_f))","hasattr(to_f, \'__func__\')", "to_f = getattr(to_f,\'__func__\',to_f)", to_f=to_f, '
+   'to=to) \n')],
+ [("\n        from_f = getattr(from_f,'__func__',from_f)\n        to_f = getattr(to_f,'__func__',to_f)\n",
+   '\n'
+   '\n'
+   '        dbprint("        from_f = getattr(from_f,\'__func__\',from_f)\\n\\        to_f = getattr(to_f,\'__func__\',to_f)","This line is for '
+   'classmethod, as it is not callable, so inspect.signature(...) won\'t work, but it has __func__ to save","f", "from_f", "type(from_f)","try:\\n    '
+   "inspect.signature(from_f)\\nexcept:\\n    print('error occurs')\\n    print(f'is from_f callable: {callable(from_f)}')\\nelse:\\n    "
+   'print(inspect.signature(from_f))", "hasattr(from_f, \'__func__\')", "from_f = getattr(from_f,\'__func__\',from_f)", "from_f","to", "to_f", '
+   '"type(to_f)","try:\\n    inspect.signature(to_f)\\nexcept:\\n    print(\'error occurs\')\\n    print(f\'is to_f callable: '
+   '{callable(to_f)}\')\\nelse:\\n    print(inspect.signature(to_f))", "hasattr(to_f, \'__func__\')", "to_f = getattr(to_f,\'__func__\',to_f)", '
+   '"to_f",from_f=from_f, to_f=to_f, f=f, to=to, srcline=srcline)\n')]]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>srcline <span class="op">=</span> srcdbps[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">0</span>] </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dbcode <span class="op">=</span> srcdbps[<span class="dv">0</span>][<span class="dv">0</span>][<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>use_kwargs_dict?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> use_kwargs_dict<span class="ansi-blue-fg">(</span>keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span> Decorator: replace `**kwargs` in signature with `names` params
+<span class="ansi-red-fg">File:</span>      ~/mambaforge/lib/python3.9/site-packages/fastcore/meta.py
+<span class="ansi-red-fg">Type:</span>      function
+</pre>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>delegates <span class="op">=</span> insert2debug(srcname, srcline, dbcode) </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># user input: delegates=delegates is no longer needed as utils has from fastcore.meta import *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def delegates(to:FunctionType=None, # Delegatee
+              keep=False, # Keep `kwargs` in decorated function?
+              but:list=None): # Exclude these parameters from signature
+    "Decorator: replace `**kwargs` in signature with params from `to`"
+    if but is None: but = []
+    def _f(f):
+
+        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n\        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f","if to is None: when both to and f are classes.\nIf isinstance(to, type): when to is a class","if to is None:\n    to_f,from_f = f.__base__.__init__,f.__init__\nelse:\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '__annotations__')", "hasattr(from_f, '__annotations__')", f=f, to=to)
+
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f
+        from_f = getattr(from_f,'__func__',from_f)
+        to_f = getattr(to_f,'__func__',to_f)
+        if hasattr(from_f,'__delwrap__'): return f
+        sig = inspect.signature(from_f)
+        sigd = dict(sig.parameters)
+        k = sigd.pop('kwargs')
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}
+        sigd.update(s2)
+        if keep: sigd['kwargs'] = k
+        else: from_f.__delwrap__ = to_f
+        from_f.__signature__ = sig.replace(parameters=sigd.values())
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)
+        return f
+    return _f
+</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>delegates??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> delegates<span class="ansi-blue-fg">(</span>to<span class="ansi-blue-fg">:</span> function <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> keep<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> but<span class="ansi-blue-fg">:</span> list <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span> Decorator: replace `**kwargs` in signature with params from `to`
+<span class="ansi-red-fg">File:</span>      Dynamically generated function. No source code available.
+<span class="ansi-red-fg">Type:</span>      function
+</pre>
+</div>
+</div>
+</div>
+<section id="examples-for-debugging" class="level3">
+<h3 class="anchored" data-anchor-id="examples-for-debugging">Examples for debugging</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>defaults.eg<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="st">class Foo():</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(low) # to as func</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="st">    @classmethod # classmethod() run before delegates()</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="st">    def clsmid1(cls, c, d=1, **kwargs): pass # f as classmethod</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(clsmid1) # to as classmethod</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="st">    @classmethod</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="st">    def clsmid2(cls, c, e=1, **kwargs): pass # f as classmethod</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(low) <span class="co"># to as func</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span> <span class="co"># classmethod() run before delegates()</span></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid1(cls, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as classmethod</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(clsmid1) <span class="co"># to as classmethod</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid2(cls, c, e<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as classmethod</span></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid1, <span class="st">'(c, d=1, *, b=1)'</span>)</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid2, <span class="st">'(c, e=1, *, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo():
+
+    @delegates(low) # to as func
+    @classmethod # classmethod() run before delegates()
+    def clsmid1(cls, c, d=1, **kwargs): pass # f as classmethod
+
+
+    @delegates(clsmid1) # to as classmethod
+    @classmethod
+    def clsmid2(cls, c, e=1, **kwargs): pass # f as classmethod
+
+test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')
+test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                                 to_f =&gt; to_f : &lt;function low&gt;
+
+
+                                                                                                       from_f =&gt; from_f : &lt;classmethod object&gt;
+
+
+                                                                                  hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : True
+
+
+                                                                             hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : False
+
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo():
+
+    @delegates(low) # to as func
+    @classmethod # classmethod() run before delegates()
+    def clsmid1(cls, c, d=1, **kwargs): pass # f as classmethod
+
+
+    @delegates(clsmid1) # to as classmethod
+    @classmethod
+    def clsmid2(cls, c, e=1, **kwargs): pass # f as classmethod
+
+test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')
+test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                           to_f =&gt; to_f : &lt;classmethod object&gt;
+
+
+                                                                                                       from_f =&gt; from_f : &lt;classmethod object&gt;
+
+
+                                                                                 hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : False
+
+
+                                                                             hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : False</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>defaults.eg<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="st">class Foo():</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="st">    @classmethod</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(low) # to as func</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="st">    def clsmid1(cls, c, d=1, **kwargs): pass # f as instance method or func?????</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="st">    @classmethod </span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(clsmid1)  # to as classmethod</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="st">    def clsmid2(cls, c, e=1, **kwargs): pass # f as instance or just func?????</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo():</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(low) <span class="co"># to as func</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid1(cls, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as instance method or func?????</span></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span> </span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(clsmid1)  <span class="co"># to as classmethod</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clsmid2(cls, c, e<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as instance or just func?????</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid1, <span class="st">'(c, d=1, *, b=1)'</span>)</span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>test_sig(Foo.clsmid2, <span class="st">'(c, e=1, *, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo():
+    
+    @classmethod
+    @delegates(low) # to as func
+    def clsmid1(cls, c, d=1, **kwargs): pass # f as instance method or func?????
+
+    @classmethod 
+    @delegates(clsmid1)  # to as classmethod
+    def clsmid2(cls, c, e=1, **kwargs): pass # f as instance or just func?????
+
+test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')
+test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                                 to_f =&gt; to_f : &lt;function low&gt;
+
+
+                                                                                                     from_f =&gt; from_f : &lt;function Foo.clsmid1&gt;
+
+
+                                                                                  hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : True
+
+
+                                                                              hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : True
+
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo():
+    
+    @classmethod
+    @delegates(low) # to as func
+    def clsmid1(cls, c, d=1, **kwargs): pass # f as instance method or func?????
+
+    @classmethod 
+    @delegates(clsmid1)  # to as classmethod
+    def clsmid2(cls, c, e=1, **kwargs): pass # f as instance or just func?????
+
+test_sig(Foo.clsmid1, '(c, d=1, *, b=1)')
+test_sig(Foo.clsmid2, '(c, e=1, *, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                           to_f =&gt; to_f : &lt;classmethod object&gt;
+
+
+                                                                                                     from_f =&gt; from_f : &lt;function Foo.clsmid2&gt;
+
+
+                                                                                 hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : False
+
+
+                                                                              hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : True</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>defaults.eg <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">class Foo1():</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(Foo.clsmid2) # to as classmethod</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="st">    def instmid1(self, c, f=1, **kwargs): pass # f as func</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="st">    @delegates(instmid1) # to as instance method? or func? Is there a thing called instance method class</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="st">    def instmid2(self, c, g=1, **kwargs): pass</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="st">f = Foo1()</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(f.instmid1, '(c, f=1, *, e=1, d=1, b=1)')</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(f.instmid2, '(c, g=1, *, f=1, e=1, d=1, b=1)')</span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo1():</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(Foo.clsmid2) <span class="co"># to as classmethod</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> instmid1(<span class="va">self</span>, c, f<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as func</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">@delegates</span>(instmid1) <span class="co"># to as instance method? or func? Is there a thing called instance method class</span></span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> instmid2(<span class="va">self</span>, c, g<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span></span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> Foo1()</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>test_sig(f.instmid1, <span class="st">'(c, f=1, *, e=1, d=1, b=1)'</span>)</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>test_sig(f.instmid2, <span class="st">'(c, g=1, *, f=1, e=1, d=1, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo1():
+
+    @delegates(Foo.clsmid2) # to as classmethod
+    def instmid1(self, c, f=1, **kwargs): pass # f as func
+
+    @delegates(instmid1) # to as instance method? or func? Is there a thing called instance method class
+    def instmid2(self, c, g=1, **kwargs): pass
+
+f = Foo1()
+test_sig(f.instmid1, '(c, f=1, *, e=1, d=1, b=1)')
+test_sig(f.instmid2, '(c, g=1, *, f=1, e=1, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                          to_f =&gt; to_f : &lt;bound method Foo.clsmid2 of &lt;class '__main__.Foo'&gt;&gt;
+
+
+                                                                                                   from_f =&gt; from_f : &lt;function Foo1.instmid1&gt;
+
+
+                                                                                  hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : True
+
+
+                                                                              hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : True
+
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Foo1():
+
+    @delegates(Foo.clsmid2) # to as classmethod
+    def instmid1(self, c, f=1, **kwargs): pass # f as func
+
+    @delegates(instmid1) # to as instance method? or func? Is there a thing called instance method class
+    def instmid2(self, c, g=1, **kwargs): pass
+
+f = Foo1()
+test_sig(f.instmid1, '(c, f=1, *, e=1, d=1, b=1)')
+test_sig(f.instmid2, '(c, g=1, *, f=1, e=1, d=1, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                       to_f =&gt; to_f : &lt;function Foo1.instmid1&gt;
+
+
+                                                                                                   from_f =&gt; from_f : &lt;function Foo1.instmid2&gt;
+
+
+                                                                                  hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : True
+
+
+                                                                              hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : True</code></pre>
+</div>
+</div>
+</section>
+<section id="debugging-multiline-source-codes-with-dbprints" class="level3">
+<h3 class="anchored" data-anchor-id="debugging-multiline-source-codes-with-dbprints">debugging multiline source codes with dbprints</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>dbsrclines(srcname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'\n        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f\n'
+('\n'
+ '\n'
+ '        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\\n\\        else:          to_f,from_f = to.__init__ if '
+ 'isinstance(to,type) else to,f","if to is None: when both to and f are classes.\\nIf isinstance(to, type): when to is a class","if to is None:\\n    '
+ 'to_f,from_f = f.__base__.__init__,f.__init__\\nelse:\\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '
+ '\'__annotations__\')", "hasattr(from_f, \'__annotations__\')", f=f, to=to)\n')
+
+"        if hasattr(from_f,'__delwrap__'): return f"
+('\n'
+ '        dbprint("if hasattr(from_f,\'__delwrap__\'): return f", "If f or from_f has __delwrap__, it means it\'s happy with all params and give up on '
+ '**kwargs. So no more params needed from other `to`s", "from_f", "f", "hasattr(from_f, \'__delwrap__\')", "if hasattr(from_f,\'__delwrap__\'): return f", '
+ 'from_f=from_f, f=f)\n')
+
+"        to_f = getattr(to_f,'__func__',to_f)"
+('\n'
+ '\n'
+ '        dbprint(srcline, "This line is for classmethod, as it is not callable, so inspect.signature(...) won\'t work, but it has __func__ to save", "to", '
+ '"to_f", "type(to_f)", "try:\\n    inspect.signature(to_f)\\nexcept:\\n    print(\'error occurs\')\\n    print(f\'is to_f callable: '
+ '{callable(to_f)}\')\\nelse:\\n    print(inspect.signature(to_f))","hasattr(to_f, \'__func__\')", "to_f = getattr(to_f,\'__func__\',to_f)", to_f=to_f, '
+ 'to=to) \n')
+
+"\n        from_f = getattr(from_f,'__func__',from_f)\n        to_f = getattr(to_f,'__func__',to_f)\n"
+('\n'
+ '\n'
+ '        dbprint("        from_f = getattr(from_f,\'__func__\',from_f)\\n\\        to_f = getattr(to_f,\'__func__\',to_f)","This line is for classmethod, '
+ 'as it is not callable, so inspect.signature(...) won\'t work, but it has __func__ to save","f", "from_f", "type(from_f)","try:\\n    '
+ "inspect.signature(from_f)\\nexcept:\\n    print('error occurs')\\n    print(f'is from_f callable: {callable(from_f)}')\\nelse:\\n    "
+ 'print(inspect.signature(from_f))", "hasattr(from_f, \'__func__\')", "from_f = getattr(from_f,\'__func__\',from_f)", "from_f","to", "to_f", '
+ '"type(to_f)","try:\\n    inspect.signature(to_f)\\nexcept:\\n    print(\'error occurs\')\\n    print(f\'is to_f callable: '
+ '{callable(to_f)}\')\\nelse:\\n    print(inspect.signature(to_f))", "hasattr(to_f, \'__func__\')", "to_f = getattr(to_f,\'__func__\',to_f)", '
+ '"to_f",from_f=from_f, to_f=to_f, f=f, to=to, srcline=srcline)\n')
+</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>delegates <span class="op">=</span> dbsrclines(srcname, [<span class="dv">0</span>, <span class="dv">3</span>]) <span class="co"># only this example has srccode printout highlight issue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def delegates(to:FunctionType=None, # Delegatee
+              keep=False, # Keep `kwargs` in decorated function?
+              but:list=None): # Exclude these parameters from signature
+    "Decorator: replace `**kwargs` in signature with params from `to`"
+    if but is None: but = []
+    def _f(f):
+
+        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n\        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f","if to is None: when both to and f are classes.\nIf isinstance(to, type): when to is a class","if to is None:\n    to_f,from_f = f.__base__.__init__,f.__init__\nelse:\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '__annotations__')", "hasattr(from_f, '__annotations__')", f=f, to=to)
+
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f
+        from_f = getattr(from_f,'__func__',from_f)
+        to_f = getattr(to_f,'__func__',to_f)
+        if hasattr(from_f,'__delwrap__'): return f
+        sig = inspect.signature(from_f)
+        sigd = dict(sig.parameters)
+        k = sigd.pop('kwargs')
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}
+        sigd.update(s2)
+        if keep: sigd['kwargs'] = k
+        else: from_f.__delwrap__ = to_f
+        from_f.__signature__ = sig.replace(parameters=sigd.values())
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)
+        return f
+    return _f
+
+def delegates(to:FunctionType=None, # Delegatee
+              keep=False, # Keep `kwargs` in decorated function?
+              but:list=None): # Exclude these parameters from signature
+    "Decorator: replace `**kwargs` in signature with params from `to`"
+    if but is None: but = []
+    def _f(f):
+
+        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n\        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f","if to is None: when both to and f are classes.\nIf isinstance(to, type): when to is a class","if to is None:\n    to_f,from_f = f.__base__.__init__,f.__init__\nelse:\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '__annotations__')", "hasattr(from_f, '__annotations__')", f=f, to=to)
+
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f
+
+        dbprint("        from_f = getattr(from_f,'__func__',from_f)\n\        to_f = getattr(to_f,'__func__',to_f)","This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save","f", "from_f", "type(from_f)","try:\n    inspect.signature(from_f)\nexcept:\n    print('error occurs')\n    print(f'is from_f callable: {callable(from_f)}')\nelse:\n    print(inspect.signature(from_f))", "hasattr(from_f, '__func__')", "from_f = getattr(from_f,'__func__',from_f)", "from_f","to", "to_f", "type(to_f)","try:\n    inspect.signature(to_f)\nexcept:\n    print('error occurs')\n    print(f'is to_f callable: {callable(to_f)}')\nelse:\n    print(inspect.signature(to_f))", "hasattr(to_f, '__func__')", "to_f = getattr(to_f,'__func__',to_f)", "to_f",from_f=from_f, to_f=to_f, f=f, to=to, srcline=srcline)
+
+        from_f = getattr(from_f,'__func__',from_f)
+        to_f = getattr(to_f,'__func__',to_f)
+        if hasattr(from_f,'__delwrap__'): return f
+        sig = inspect.signature(from_f)
+        sigd = dict(sig.parameters)
+        k = sigd.pop('kwargs')
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}
+        sigd.update(s2)
+        if keep: sigd['kwargs'] = k
+        else: from_f.__delwrap__ = to_f
+        from_f.__signature__ = sig.replace(parameters=sigd.values())
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)
+        return f
+    return _f
+</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>defaults.eg <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="st">class Base(): </span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="st">    def __init__(self, a, b=1): pass </span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="st">class Other():</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="st">    def __init__(self, e=1): pass</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="st">@delegates()</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="st">class Subcls(Base): # to as a superclass (Base),  to must have __init__, and __new__ won't do</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="st">    def __init__(self, c, d=1, **kwargs): pass # f as class, should have __init__</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="st">test_sig(Subcls, '(c, d=1, *, b=1)')</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Base(): </span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, a, b<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span> </span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Other():</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, e<span class="op">=</span><span class="dv">1</span>): <span class="cf">pass</span></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="at">@delegates</span>()</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Subcls(Base): <span class="co"># to as a superclass (Base),  to must have __init__, and __new__ won't do</span></span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, c, d<span class="op">=</span><span class="dv">1</span>, <span class="op">**</span>kwargs): <span class="cf">pass</span> <span class="co"># f as class, should have __init__</span></span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>test_sig(Subcls, <span class="st">'(c, d=1, *, b=1)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__==========================================================================================
+                                                                                                      if to is None: when both to and f are classes.
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f============================================================================
+                                                                                                         If isinstance(to, type): when to is a class
+        from_f = getattr(from_f,'__func__',from_f)                                                                                                           
+        to_f = getattr(to_f,'__func__',to_f)                                                                                                                 
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Base(): 
+    def __init__(self, a, b=1): pass 
+class Other():
+    def __init__(self, e=1): pass
+
+@delegates()
+class Subcls(Base): # to as a superclass (Base),  to must have __init__, and __new__ won't do
+    def __init__(self, c, d=1, **kwargs): pass # f as class, should have __init__
+test_sig(Subcls, '(c, d=1, *, b=1)')
+
+
+
+if to is None:
+    to_f,from_f = f.__base__.__init__,f.__init__
+else:
+    to_f,from_f = to.__init__ if isinstance(to,type) else to,f                         
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+
+
+                                                                                                       to_f =&gt; to_f : &lt;function Base.__init__&gt;
+
+
+                                                                                                 from_f =&gt; from_f : &lt;function Subcls.__init__&gt;
+
+
+                                                                                  hasattr(to_f, '__annotations__') =&gt; hasattr(to_f, '__annotations__') : True
+
+
+                                                                              hasattr(from_f, '__annotations__') =&gt; hasattr(from_f, '__annotations__') : True
+
+
+######################################################## source code with lines under investigation #########################################################
+
+
+def delegates(to:FunctionType=None, # Delegatee                                                                                                              
+              keep=False, # Keep `kwargs` in decorated function?                                                                                             
+              but:list=None): # Exclude these parameters from signature                                                                                      
+    "Decorator: replace `**kwargs` in signature with params from `to`"                                                                                       
+    if but is None: but = []                                                                                                                                 
+    def _f(f):                                                                                                                                               
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__                                                                                          
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f                                                                            
+        from_f = getattr(from_f,'__func__',from_f)===========================================================================================================
+                              This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save
+        to_f = getattr(to_f,'__func__',to_f)=================================================================================================================
+        if hasattr(from_f,'__delwrap__'): return f                                                                                                           
+        sig = inspect.signature(from_f)                                                                                                                      
+        sigd = dict(sig.parameters)                                                                                                                          
+        k = sigd.pop('kwargs')                                                                                                                               
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()                                         
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}                                                                    
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}                                                               
+        sigd.update(s2)                                                                                                                                      
+        if keep: sigd['kwargs'] = k                                                                                                                          
+        else: from_f.__delwrap__ = to_f                                                                                                                      
+        from_f.__signature__ = sig.replace(parameters=sigd.values())                                                                                         
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)                                                                           
+        return f                                                                                                                                             
+    return _f                                                                                                                                                
+                                                                                                                                                             
+
+class Base(): 
+    def __init__(self, a, b=1): pass 
+class Other():
+    def __init__(self, e=1): pass
+
+@delegates()
+class Subcls(Base): # to as a superclass (Base),  to must have __init__, and __new__ won't do
+    def __init__(self, c, d=1, **kwargs): pass # f as class, should have __init__
+test_sig(Subcls, '(c, d=1, *, b=1)')
+
+
+
+                                                                                                                           f =&gt; f : &lt;class '__main__.Subcls'&gt;
+
+
+                                                                                                 from_f =&gt; from_f : &lt;function Subcls.__init__&gt;
+
+
+                                                                                                            type(from_f) =&gt; type(from_f) : &lt;class 'function'&gt;
+
+
+try:
+    inspect.signature(from_f)
+except:
+    print('error occurs')
+    print(f'is from_f callable: {callable(from_f)}')
+else:
+    print(inspect.signature(from_f))
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+(self, c, d=1, **kwargs)
+
+
+                                                                                           hasattr(from_f, '__func__') =&gt; hasattr(from_f, '__func__') : False
+
+
+                                                              from_f = getattr(from_f,'__func__',from_f) =&gt; from_f: &lt;function Subcls.__init__&gt;
+
+
+                                                                                                 from_f =&gt; from_f : &lt;function Subcls.__init__&gt;
+
+
+                                                                                                                                              to =&gt; to : None
+
+
+                                                                                                       to_f =&gt; to_f : &lt;function Base.__init__&gt;
+
+
+                                                                                                                type(to_f) =&gt; type(to_f) : &lt;class 'function'&gt;
+
+
+try:
+    inspect.signature(to_f)
+except:
+    print('error occurs')
+    print(f'is to_f callable: {callable(to_f)}')
+else:
+    print(inspect.signature(to_f)) 
+                                                                                                                                  Running your code block =&gt; 
+The code block printout =&gt; : 
+(self, a, b=1)
+
+
+                                                                                               hasattr(to_f, '__func__') =&gt; hasattr(to_f, '__func__') : False
+
+
+                                                                        to_f = getattr(to_f,'__func__',to_f) =&gt; to_f: &lt;function Base.__init__&gt;
+
+
+                                                                                                       to_f =&gt; to_f : &lt;function Base.__init__&gt;</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
