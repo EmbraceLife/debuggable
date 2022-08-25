@@ -319,9 +319,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#insert-dbprint-and-make-a-new-source-function-for-debugging-line-by-line" id="toc-insert-dbprint-and-make-a-new-source-function-for-debugging-line-by-line" class="nav-link" data-scroll-target="#insert-dbprint-and-make-a-new-source-function-for-debugging-line-by-line">insert dbprint and make a new source function for debugging line by line</a>
   <ul class="collapse">
-  <li><a href="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" id="toc-remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" class="nav-link" data-scroll-target="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error">remove <code>return None</code>, so that we can run multiple <code>delegates</code> in one cell without error</a>
+  <li><a href="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" id="toc-remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" class="nav-link" data-scroll-target="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error">remove <code>return None</code>, so that we can run multiple <code>delegates</code> in one cell without error</a></li>
+  <li><a href="#major-problems-solved" id="toc-major-problems-solved" class="nav-link" data-scroll-target="#major-problems-solved">major problems solved</a>
   <ul class="collapse">
   <li><a href="#insert2debug" id="toc-insert2debug" class="nav-link" data-scroll-target="#insert2debug">insert2debug</a></li>
+  </ul></li>
+  <li><a href="#exporting-the-debuggable-source-and-major-problems-solved" id="toc-exporting-the-debuggable-source-and-major-problems-solved" class="nav-link" data-scroll-target="#exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</a>
+  <ul class="collapse">
   <li><a href="#dbsrclines" id="toc-dbsrclines" class="nav-link" data-scroll-target="#dbsrclines">dbsrclines</a></li>
   </ul></li>
   </ul></li>
@@ -3593,7 +3597,7 @@ a = 5 != 4 =&gt; a: True</code></pre>
     exec<span class="ansi-blue-fg">(</span>src2db<span class="ansi-blue-fg">,</span> globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">'srcline'</span><span class="ansi-blue-fg">:</span> srcline<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># now a debuggable version of delegates is available to use</span>
     globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>name<span class="ansi-blue-fg">:</span>eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
     <span class="ansi-green-fg">return</span> eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># give this debuggable version of delegates to the notebook context</span>
-<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_36408/435102324.py
+<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_44972/435102324.py
 <span class="ansi-red-fg">Type:</span>      function
 </pre>
 </div>
@@ -3621,23 +3625,53 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <span id="cb197-17"><a href="#cb197-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># globals().update({name:eval(name)})</span></span>
 <span id="cb197-18"><a href="#cb197-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">eval</span>(name) <span class="co"># give this debuggable version of delegates to the notebook context</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert2debug(name:<span class="bu">str</span>, <span class="co"># name of a function to debug, e.g., delegates</span></span>
+<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a>                 srcline:<span class="bu">str</span>, <span class="co"># e.g., "        if hasattr(from_f,'__delwrap__'): return f"</span></span>
+<span id="cb198-3"><a href="#cb198-3" aria-hidden="true" tabindex="-1"></a>                 dbcode:<span class="bu">str</span>,  <span class="co"># str, e.g., "dbprint(...)"</span></span>
+<span id="cb198-4"><a href="#cb198-4" aria-hidden="true" tabindex="-1"></a>                 <span class="op">**</span>env):</span>
+<span id="cb198-5"><a href="#cb198-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"select a line or a block of source code and insert a dbprint above it and only output this dbprint result."</span></span>
+<span id="cb198-6"><a href="#cb198-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb198-7"><a href="#cb198-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># defaults.multi default to False, unless set True, defaults.deb is default to None before debugging srcode</span></span>
+<span id="cb198-8"><a href="#cb198-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> defaults.multi <span class="kw">and</span> <span class="bu">bool</span>(defaults.deb): </span>
+<span id="cb198-9"><a href="#cb198-9" aria-hidden="true" tabindex="-1"></a>        srcode <span class="op">=</span> defaults.deb</span>
+<span id="cb198-10"><a href="#cb198-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb198-11"><a href="#cb198-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># srcode = inspect.getsource(eval(name, globals().update(env)))</span></span>
+<span id="cb198-12"><a href="#cb198-12" aria-hidden="true" tabindex="-1"></a>        srcode <span class="op">=</span> defaults.src</span>
+<span id="cb198-13"><a href="#cb198-13" aria-hidden="true" tabindex="-1"></a>    lstxt <span class="op">=</span> srcode.split(srcline)</span>
+<span id="cb198-14"><a href="#cb198-14" aria-hidden="true" tabindex="-1"></a>    retn <span class="op">=</span> <span class="st">""</span> <span class="co"># retn = "\n        return None\n" to exit the function, "" to continue on</span></span>
+<span id="cb198-15"><a href="#cb198-15" aria-hidden="true" tabindex="-1"></a>    insert <span class="op">=</span> colorize(dbcode, <span class="st">"g"</span>) <span class="op">+</span> colorize(srcline, <span class="st">"r"</span>) <span class="op">+</span> colorize(retn, <span class="st">"y"</span>)</span>
+<span id="cb198-16"><a href="#cb198-16" aria-hidden="true" tabindex="-1"></a>    src2print <span class="op">=</span> lstxt[<span class="dv">0</span>] <span class="op">+</span> insert <span class="op">+</span> lstxt[<span class="dv">1</span>]</span>
+<span id="cb198-17"><a href="#cb198-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> src2print.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>):  <span class="co"># print out the debuggable version of delegates</span></span>
+<span id="cb198-18"><a href="#cb198-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(l)</span>
+<span id="cb198-19"><a href="#cb198-19" aria-hidden="true" tabindex="-1"></a>    src2db <span class="op">=</span> lstxt[<span class="dv">0</span>] <span class="op">+</span> dbcode <span class="op">+</span> srcline <span class="op">+</span> retn <span class="op">+</span> lstxt[<span class="dv">1</span>]</span>
+<span id="cb198-20"><a href="#cb198-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> defaults.multi: defaults.deb <span class="op">=</span> src2db</span>
+<span id="cb198-21"><a href="#cb198-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exec</span>(src2db, <span class="bu">globals</span>().update({<span class="st">'srcline'</span>: srcline})) <span class="co"># now a debuggable version of delegates is available to use</span></span>
+<span id="cb198-22"><a href="#cb198-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># globals().update({name:eval(name)})</span></span>
+<span id="cb198-23"><a href="#cb198-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">eval</span>(name) <span class="co"># give this debuggable version of delegates to the notebook context</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="major-problems-solved" class="level3">
+<h3 class="anchored" data-anchor-id="major-problems-solved">major problems solved</h3>
 <hr>
 <section id="insert2debug" class="level4">
 <h4 class="anchored" data-anchor-id="insert2debug">insert2debug</h4>
 <blockquote class="blockquote">
-<pre><code> insert2debug (name:str, srcline:str, dbcode:str, **env)</code></pre>
+<pre><code> insert2debug (name:str, srcline:str, dbcode:str, run:bool=True, **env)</code></pre>
 </blockquote>
 <p>select a line or a block of source code and insert a dbprint above it and only output this dbprint result.</p>
 <table class="table">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 38%">
-<col style="width: 52%">
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
 <th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
 <th><strong>Details</strong></th>
 </tr>
 </thead>
@@ -3645,34 +3679,45 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <tr class="odd">
 <td>name</td>
 <td>str</td>
+<td></td>
 <td>name of a function to debug, e.g., delegates</td>
 </tr>
 <tr class="even">
 <td>srcline</td>
 <td>str</td>
+<td></td>
 <td>e.g., ” if hasattr(from_f,‘<strong>delwrap</strong>’): return f”</td>
 </tr>
 <tr class="odd">
 <td>dbcode</td>
 <td>str</td>
+<td></td>
 <td>str, e.g., “dbprint(…)”</td>
 </tr>
 <tr class="even">
+<td>run</td>
+<td>bool</td>
+<td>True</td>
+<td>run exec or not</td>
+</tr>
+<tr class="odd">
 <td>env</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a>insert2debug??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a>insert2debug??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">Signature:</span> insert2debug<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> srcline<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> dbcode<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">)</span>
+<pre><span class="ansi-red-fg">Signature:</span> insert2debug<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> srcline<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> dbcode<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> run<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">)</span>
 <span class="ansi-red-fg">Source:</span>   
 <span class="ansi-green-fg">def</span> insert2debug<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># name of a function to debug, e.g., delegates</span>
                  srcline<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># e.g., "        if hasattr(from_f,'__delwrap__'): return f"</span>
                  dbcode<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># str, e.g., "dbprint(...)"</span>
+                 run<span class="ansi-blue-fg">:</span>bool<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># run exec or not</span>
                  <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
     <span class="ansi-blue-fg">"select a line or a block of source code and insert a dbprint above it and only output this dbprint result."</span>
     
@@ -3686,25 +3731,74 @@ a = 5 != 4 =&gt; a: True</code></pre>
     retn <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">""</span> <span class="ansi-red-fg"># retn = "\n        return None\n" to exit the function, "" to continue on</span>
     insert <span class="ansi-blue-fg">=</span> colorize<span class="ansi-blue-fg">(</span>dbcode<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"g"</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> colorize<span class="ansi-blue-fg">(</span>srcline<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"r"</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> colorize<span class="ansi-blue-fg">(</span>retn<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"y"</span><span class="ansi-blue-fg">)</span>
     src2print <span class="ansi-blue-fg">=</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> insert <span class="ansi-blue-fg">+</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
-    <span class="ansi-green-fg">for</span> l <span class="ansi-green-fg">in</span> src2print<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"\n"</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># print out the debuggable version of delegates</span>
-        print<span class="ansi-blue-fg">(</span>l<span class="ansi-blue-fg">)</span>
+    
+    <span class="ansi-red-fg"># if run == True: # if not run exec, then don't print neighter</span>
+    <span class="ansi-red-fg">#     for l in src2print.split("\n"):  # print out the debuggable version of delegates</span>
+    <span class="ansi-red-fg">#         print(l)</span>
+            
     src2db <span class="ansi-blue-fg">=</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> dbcode <span class="ansi-blue-fg">+</span> srcline <span class="ansi-blue-fg">+</span> retn <span class="ansi-blue-fg">+</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
-    <span class="ansi-green-fg">if</span> defaults<span class="ansi-blue-fg">.</span>multi<span class="ansi-blue-fg">:</span> defaults<span class="ansi-blue-fg">.</span>deb <span class="ansi-blue-fg">=</span> src2db
-    exec<span class="ansi-blue-fg">(</span>src2db<span class="ansi-blue-fg">,</span> globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">'srcline'</span><span class="ansi-blue-fg">:</span> srcline<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># now a debuggable version of delegates is available to use</span>
-    <span class="ansi-red-fg"># globals().update({name:eval(name)})</span>
-    <span class="ansi-green-fg">return</span> eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># give this debuggable version of delegates to the notebook context</span>
-<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_36408/3506707829.py
+    <span class="ansi-red-fg"># if defaults.multi: defaults.deb = src2db</span>
+    defaults<span class="ansi-blue-fg">.</span>deb <span class="ansi-blue-fg">=</span> src2db
+    
+    <span class="ansi-red-fg"># to exec </span>
+    <span class="ansi-green-fg">if</span> run<span class="ansi-blue-fg">:</span> 
+        exec<span class="ansi-blue-fg">(</span>src2db<span class="ansi-blue-fg">,</span> globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">'srcline'</span><span class="ansi-blue-fg">:</span> srcline<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># now a debuggable version of delegates is available to use</span>
+        <span class="ansi-red-fg"># globals().update({name:eval(name)})</span>
+        <span class="ansi-green-fg">return</span> eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># give this debuggable version of delegates to the notebook context</span>
+    <span class="ansi-red-fg"># to not exec but only get the full debuggable source </span>
+    <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> 
+        <span class="ansi-green-fg">return</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_44972/3949958632.py
 <span class="ansi-red-fg">Type:</span>      function
 </pre>
 </div>
 </div>
 </div>
-<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
+<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span> <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
+<span id="cb201-3"><a href="#cb201-3" aria-hidden="true" tabindex="-1"></a>              ): </span>
+<span id="cb201-4"><a href="#cb201-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
+<span id="cb201-5"><a href="#cb201-5" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
+<span id="cb201-6"><a href="#cb201-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
+<span id="cb201-7"><a href="#cb201-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb201-8"><a href="#cb201-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines):</span>
+<span id="cb201-9"><a href="#cb201-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb201-10"><a href="#cb201-10" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">0</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb201-11"><a href="#cb201-11" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">1</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb201-12"><a href="#cb201-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb201-13"><a href="#cb201-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb201-14"><a href="#cb201-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb201-15"><a href="#cb201-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
+<span id="cb201-16"><a href="#cb201-16" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb201-17"><a href="#cb201-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
+<span id="cb201-18"><a href="#cb201-18" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb201-19"><a href="#cb201-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb201-20"><a href="#cb201-20" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
+<span id="cb201-21"><a href="#cb201-21" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb201-22"><a href="#cb201-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb201-23"><a href="#cb201-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb201-24"><a href="#cb201-24" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb201-25"><a href="#cb201-25" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb201-26"><a href="#cb201-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> L([[(<span class="dv">1</span>,<span class="dv">2</span>)],[(<span class="dv">2</span>,<span class="dv">2</span>)]]): </span>
+<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[(1, 2)]
+[(2, 2)]</code></pre>
+</div>
+</div>
 </section>
+</section>
+<section id="exporting-the-debuggable-source-and-major-problems-solved" class="level3">
+<h3 class="anchored" data-anchor-id="exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</h3>
+<hr>
 <section id="dbsrclines" class="level4">
 <h4 class="anchored" data-anchor-id="dbsrclines">dbsrclines</h4>
 <blockquote class="blockquote">
-<pre><code> dbsrclines (srcname:str, lines:list=None)</code></pre>
+<pre><code> dbsrclines (srcname:str, lines:list=None, dbsrc:bool=False)</code></pre>
 </blockquote>
 <p>Doing one line or multilines of insert2debug on source code with dbprints.</p>
 <table class="table">
@@ -3735,18 +3829,16 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <td>None</td>
 <td>if None then print all e.g., defaults.src2dbp.delegates</td>
 </tr>
+<tr class="odd">
+<td>dbsrc</td>
+<td>bool</td>
+<td>False</td>
+<td>get the full debuggable source code</td>
+</tr>
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> L([[(<span class="dv">1</span>,<span class="dv">2</span>)],[(<span class="dv">2</span>,<span class="dv">2</span>)]]): </span>
-<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[(1, 2)]
-[(2, 2)]</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a>alignright(blocks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a>alignright(blocks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                                               
                                                                                                if to is None:
@@ -3757,21 +3849,21 @@ a = 5 != 4 =&gt; a: True</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a>MARGIN<span class="op">=</span><span class="dv">157</span></span>
-<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-4"><a href="#cb205-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_ansi(source):</span>
-<span id="cb205-5"><a href="#cb205-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r'\033\[(\d|;)+?m'</span>, <span class="st">''</span>, source)</span>
-<span id="cb205-6"><a href="#cb205-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-7"><a href="#cb205-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> alignright(blocks):</span>
-<span id="cb205-8"><a href="#cb205-8" aria-hidden="true" tabindex="-1"></a>    lst <span class="op">=</span> blocks.split(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb205-9"><a href="#cb205-9" aria-hidden="true" tabindex="-1"></a>    maxlen <span class="op">=</span> <span class="bu">max</span>(<span class="bu">map</span>(<span class="kw">lambda</span> l : <span class="bu">len</span>(strip_ansi(l)) , lst ))</span>
-<span id="cb205-10"><a href="#cb205-10" aria-hidden="true" tabindex="-1"></a>    indent <span class="op">=</span> MARGIN <span class="op">-</span> maxlen</span>
-<span id="cb205-11"><a href="#cb205-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lst:</span>
-<span id="cb205-12"><a href="#cb205-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">' '</span><span class="op">*</span>indent <span class="op">+</span> <span class="bu">format</span>(l))</span>
-<span id="cb205-13"><a href="#cb205-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-14"><a href="#cb205-14" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"this is me"</span>)</span>
-<span id="cb205-15"><a href="#cb205-15" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"</span><span class="ch">\x1b</span><span class="st">[91mthis is me</span><span class="ch">\x1b</span><span class="st">[0m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>MARGIN<span class="op">=</span><span class="dv">157</span></span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_ansi(source):</span>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r'\033\[(\d|;)+?m'</span>, <span class="st">''</span>, source)</span>
+<span id="cb207-6"><a href="#cb207-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-7"><a href="#cb207-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> alignright(blocks):</span>
+<span id="cb207-8"><a href="#cb207-8" aria-hidden="true" tabindex="-1"></a>    lst <span class="op">=</span> blocks.split(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb207-9"><a href="#cb207-9" aria-hidden="true" tabindex="-1"></a>    maxlen <span class="op">=</span> <span class="bu">max</span>(<span class="bu">map</span>(<span class="kw">lambda</span> l : <span class="bu">len</span>(strip_ansi(l)) , lst ))</span>
+<span id="cb207-10"><a href="#cb207-10" aria-hidden="true" tabindex="-1"></a>    indent <span class="op">=</span> MARGIN <span class="op">-</span> maxlen</span>
+<span id="cb207-11"><a href="#cb207-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> l <span class="kw">in</span> lst:</span>
+<span id="cb207-12"><a href="#cb207-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">' '</span><span class="op">*</span>indent <span class="op">+</span> <span class="bu">format</span>(l))</span>
+<span id="cb207-13"><a href="#cb207-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-14"><a href="#cb207-14" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"this is me"</span>)</span>
+<span id="cb207-15"><a href="#cb207-15" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"</span><span class="ch">\x1b</span><span class="st">[91mthis is me</span><span class="ch">\x1b</span><span class="st">[0m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                                                                                                   this is me
                                                                                                                                                    this is me</code></pre>

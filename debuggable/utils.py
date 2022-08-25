@@ -93,7 +93,9 @@ defaults = type('defaults', (object,), {'block': False, # whether inside a block
                                      'eg': None, # save an example in str
                                      'margin': 157, # for align to the right
                                      'multi': False, # debugging multiline source codes
-                                     'src2dbp': type('fastcore.meta', (object,), {'delegates': []}) # store a list of (srcline, dbcode)
+                                     'src2dbp': type('fastcore.meta', (object,), {'delegates': [], # a list of lists of (srcline, dbcode) 
+                                                                                  'delegatesdb': None, # the debuggable source
+                                                                                 }) # store a list of (srcline, dbcode)
                                     }) 
 
 # %% ../utils.ipynb 141
@@ -300,10 +302,11 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 157
+# %% ../utils.ipynb 159
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
+                 run:bool=True, # run exec or not
                  **env):
     "select a line or a block of source code and insert a dbprint above it and only output this dbprint result."
     
@@ -317,40 +320,61 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     retn = "" # retn = "\n        return None\n" to exit the function, "" to continue on
     insert = colorize(dbcode, "g") + colorize(srcline, "r") + colorize(retn, "y")
     src2print = lstxt[0] + insert + lstxt[1]
-    for l in src2print.split("\n"):  # print out the debuggable version of delegates
-        print(l)
+            
     src2db = lstxt[0] + dbcode + srcline + retn + lstxt[1]
-    if defaults.multi: defaults.deb = src2db
-    exec(src2db, globals().update({'srcline': srcline})) # now a debuggable version of delegates is available to use
-    # globals().update({name:eval(name)})
-    return eval(name) # give this debuggable version of delegates to the notebook context
+    # if defaults.multi: defaults.deb = src2db
+    defaults.deb = src2db
+    
+    # to exec 
+    if run: 
+        exec(src2db, globals().update({'srcline': srcline})) # now a debuggable version of delegates is available to use
+        # globals().update({name:eval(name)})
+        return eval(name) # give this debuggable version of delegates to the notebook context
+    # to not exec but only get the full debuggable source 
+    else: 
+        return None
 
-# %% ../utils.ipynb 159
+# %% ../utils.ipynb 161
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 160
+# %% ../utils.ipynb 165
 def dbsrclines(srcname:str, # name of the source code, e.g., delegates
-               lines:list = None # if None then print all e.g., defaults.src2dbp.delegates
+               lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
+               dbsrc:bool = False # get the full debuggable source code
               ): 
     "Doing one line or multilines of insert2debug on source code with dbprints."
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
     
-    if not bool(lines):
+    if not bool(lines) and dbsrc == False: # to print out all the srclines and dbprints
         for i in srcdblist:
             pprint(i[0][0], width=157)
             pprint(i[0][1], width=157)
             print("")
+        return None
+     
+    if dbsrc and not bool(lines): # to print out the entire debuggable source code
+        defaults.multi = True
+        for i in srcdblist:
+            insert2debug(srcname, i[0][0], i[0][1], run=False) # don't exec just add up debuggable source
+        # export the debuggable source
+        defaults.src2dbp.delegatesdb = defaults.deb
+        pprint(defaults.src2dbp.delegatesdb, width=157)
+        defaults.deb = None
+        defaults.multi = False
         return None
     
     if len(lines) > 1: 
         defaults.multi = True
         for i in eval("srcdblist" + str(lines)):
             delegates = insert2debug(srcname, i[0][0], i[0][1])
+
     else: 
         item = eval("srcdblist" + str(lines))
         delegates = insert2debug(srcname, item[0][0], item[0][1])
-        
+
+    pprint(defaults.deb, width=157) # print the debuggable source
+
     defaults.multi = False
     defaults.deb = None
     return delegates
