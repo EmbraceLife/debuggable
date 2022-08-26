@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>debuggable – delegates</title>
+<title>../../debuggable - fastcore_meta</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,6 +122,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="../../debuggable - fastcore_meta">
+<meta property="og:description" content="how-parameter: How to make a parameter">
+<meta property="og:site-name" content="../../debuggable">
+<meta name="twitter:title" content="../../debuggable - fastcore_meta">
+<meta name="twitter:description" content="how-parameter: How to make a parameter">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -157,7 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <h1 class="quarto-secondary-nav-title">fastcore_meta</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -208,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link">Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></a>
+  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link">Findings from <code>fastcore.meta.delegates</code></a>
   </div>
 </li>
       </ul>
@@ -264,9 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#fastcore_meta" id="toc-fastcore_meta" class="nav-link active" data-scroll-target="#fastcore_meta">fastcore_meta</a>
-  <ul class="collapse">
-  <li><a href="#delegates" id="toc-delegates" class="nav-link" data-scroll-target="#delegates">Delegates</a>
+  <li><a href="#delegates" id="toc-delegates" class="nav-link active" data-scroll-target="#delegates">Delegates</a>
   <ul class="collapse">
   <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries">Import libraries</a></li>
   <li><a href="#reading-the-doc" id="toc-reading-the-doc" class="nav-link" data-scroll-target="#reading-the-doc">Reading the doc</a>
@@ -318,22 +322,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#how-try-except-replace-the-combination-of-if-else-hasattr" id="toc-how-try-except-replace-the-combination-of-if-else-hasattr" class="nav-link" data-scroll-target="#how-try-except-replace-the-combination-of-if-else-hasattr">how-try-except: replace the combination of <code>if else</code> + <code>hasattr</code></a></li>
   <li><a href="#how-attr-every-func-has-an-attr-__name__" id="toc-how-attr-every-func-has-an-attr-__name__" class="nav-link" data-scroll-target="#how-attr-every-func-has-an-attr-__name__">how-attr: every func has an attr <code>__name__</code></a></li>
-  <li><a href="#delegates_v1" id="toc-delegates_v1" class="nav-link" data-scroll-target="#delegates_v1">delegates_v1</a></li>
+  </ul></li>
+  <li><a href="#delegates_v1" id="toc-delegates_v1" class="nav-link" data-scroll-target="#delegates_v1">delegates_v1</a>
+  <ul class="collapse">
   <li><a href="#examples-of-v_1" id="toc-examples-of-v_1" class="nav-link" data-scroll-target="#examples-of-v_1">examples of v_1</a></li>
   </ul></li>
   <li><a href="#problem-delegates-params-from-to-act-as-keyword_only-but-its-type-says-otherwirse" id="toc-problem-delegates-params-from-to-act-as-keyword_only-but-its-type-says-otherwirse" class="nav-link" data-scroll-target="#problem-delegates-params-from-to-act-as-keyword_only-but-its-type-says-otherwirse">problem-delegates: params from <code>to</code> act as KEYWORD_ONLY but its type says otherwirse</a>
   <ul class="collapse">
   <li><a href="#how-inspect-check-param-kind" id="toc-how-inspect-check-param-kind" class="nav-link" data-scroll-target="#how-inspect-check-param-kind">how-inspect: check param kind</a></li>
   </ul></li>
-  <li><a href="#tinker-delegates-printing-a-warning-message-about-param-kind" id="toc-tinker-delegates-printing-a-warning-message-about-param-kind" class="nav-link" data-scroll-target="#tinker-delegates-printing-a-warning-message-about-param-kind">tinker-delegates: printing a warning message about param kind</a>
+  <li><a href="#tinker-delegates-printing-a-warning-message-about-param-kind" id="toc-tinker-delegates-printing-a-warning-message-about-param-kind" class="nav-link" data-scroll-target="#tinker-delegates-printing-a-warning-message-about-param-kind">tinker-delegates: printing a warning message about param kind</a></li>
+  <li><a href="#delegates_v2" id="toc-delegates_v2" class="nav-link" data-scroll-target="#delegates_v2">delegates_v2</a>
   <ul class="collapse">
-  <li><a href="#delegates_v2" id="toc-delegates_v2" class="nav-link" data-scroll-target="#delegates_v2">delegates_v2</a></li>
   <li><a href="#delegates_v2-examples" id="toc-delegates_v2-examples" class="nav-link" data-scroll-target="#delegates_v2-examples">delegates_v2 examples</a></li>
   </ul></li>
-  <li><a href="#tinker-delegates-change-parameter-type-to-parameter.keyword_only" id="toc-tinker-delegates-change-parameter-type-to-parameter.keyword_only" class="nav-link" data-scroll-target="#tinker-delegates-change-parameter-type-to-parameter.keyword_only">tinker-delegates: change parameter type to <code>Parameter.KEYWORD_ONLY</code></a>
-  <ul class="collapse">
+  <li><a href="#tinker-delegates-change-parameter-type-to-parameter.keyword_only" id="toc-tinker-delegates-change-parameter-type-to-parameter.keyword_only" class="nav-link" data-scroll-target="#tinker-delegates-change-parameter-type-to-parameter.keyword_only">tinker-delegates: change parameter type to <code>Parameter.KEYWORD_ONLY</code></a></li>
   <li><a href="#delegates_v3" id="toc-delegates_v3" class="nav-link" data-scroll-target="#delegates_v3">delegates_v3</a></li>
-  </ul></li>
   <li><a href="#contribute-delegates-pr-accepted-on-august-11-2022" id="toc-contribute-delegates-pr-accepted-on-august-11-2022" class="nav-link" data-scroll-target="#contribute-delegates-pr-accepted-on-august-11-2022">contribute-delegates: <span>PR</span> accepted on August 11 2022</a></li>
   </ul></li>
   <li><a href="#mk_param" id="toc-mk_param" class="nav-link" data-scroll-target="#mk_param">_mk_param</a>
@@ -412,18 +416,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8"></a></li>
   <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9"></a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/EmbraceLife/debuggable/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">fastcore_meta</h1>
+</div>
 
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
-<section id="fastcore_meta" class="level1">
-<h1>fastcore_meta</h1>
 <section id="delegates" class="level2">
 <h2 class="anchored" data-anchor-id="delegates">Delegates</h2>
 <section id="import-libraries" class="level3">
@@ -1337,8 +1352,9 @@ the locals of low:
 <h4 class="anchored" data-anchor-id="how-attr-every-func-has-an-attr-__name__">how-attr: every func has an attr <code>__name__</code></h4>
 <hr>
 </section>
-<section id="delegates_v1" class="level4">
-<h4 class="anchored" data-anchor-id="delegates_v1">delegates_v1</h4>
+</section>
+<section id="delegates_v1" class="level3">
+<h3 class="anchored" data-anchor-id="delegates_v1">delegates_v1</h3>
 <blockquote class="blockquote">
 <pre><code> delegates_v1 (to=None, keep=False, but:list=None)</code></pre>
 </blockquote>
@@ -1379,7 +1395,6 @@ the locals of low:
 </tr>
 </tbody>
 </table>
-</section>
 <section id="examples-of-v_1" class="level4">
 <h4 class="anchored" data-anchor-id="examples-of-v_1">examples of v_1</h4>
 <div class="cell">
@@ -1453,8 +1468,9 @@ the locals of low:
 </div>
 </div>
 <hr>
-<section id="delegates_v2" class="level4">
-<h4 class="anchored" data-anchor-id="delegates_v2">delegates_v2</h4>
+</section>
+<section id="delegates_v2" class="level3">
+<h3 class="anchored" data-anchor-id="delegates_v2">delegates_v2</h3>
 <blockquote class="blockquote">
 <pre><code> delegates_v2 (to=None, keep=False, but:list=None)</code></pre>
 </blockquote>
@@ -1495,7 +1511,6 @@ the locals of low:
 </tr>
 </tbody>
 </table>
-</section>
 <section id="delegates_v2-examples" class="level4">
 <h4 class="anchored" data-anchor-id="delegates_v2-examples">delegates_v2 examples</h4>
 <div class="cell">
@@ -1536,8 +1551,9 @@ Warning: adding extra kwargs to high will cause TypeError to low
 <section id="tinker-delegates-change-parameter-type-to-parameter.keyword_only" class="level3">
 <h3 class="anchored" data-anchor-id="tinker-delegates-change-parameter-type-to-parameter.keyword_only">tinker-delegates: change parameter type to <code>Parameter.KEYWORD_ONLY</code></h3>
 <hr>
-<section id="delegates_v3" class="level4">
-<h4 class="anchored" data-anchor-id="delegates_v3">delegates_v3</h4>
+</section>
+<section id="delegates_v3" class="level3">
+<h3 class="anchored" data-anchor-id="delegates_v3">delegates_v3</h3>
 <blockquote class="blockquote">
 <pre><code> delegates_v3 (to=None, keep=False, but:list=None)</code></pre>
 </blockquote>
@@ -1578,7 +1594,6 @@ Warning: adding extra kwargs to high will cause TypeError to low
 </tr>
 </tbody>
 </table>
-</section>
 </section>
 <section id="contribute-delegates-pr-accepted-on-august-11-2022" class="level3">
 <h3 class="anchored" data-anchor-id="contribute-delegates-pr-accepted-on-august-11-2022">contribute-delegates: <a href="https://app.reviewnb.com/fastai/fastcore/pull/459/">PR</a> accepted on August 11 2022</h3>
@@ -2024,10 +2039,10 @@ Warning: adding extra kwargs to high will cause TypeError to low
 <h2 class="anchored" data-anchor-id="fixsigmeta">FixSigMeta</h2>
 <p>A metaclass that fixes the signature on classes that override <code>__new__</code></p>
 <p>When you inherit from a class that defines <code>__new__</code>, or a metaclass that defines <code>__call__</code>, the signature of your <code>__init__</code> method is obfuscated such that tab completion no longer works. FixSigMeta fixes this issue and restores signatures.</p>
-<p>To understand what <a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#fixsigmeta"><code>FixSigMeta</code></a> does, it is useful to inspect an object’s signature. You can inspect the signature of an object with <code>inspect.signature</code>:</p>
+<p>To understand what <a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#fixsigmeta"><code>FixSigMeta</code></a> does, it is useful to inspect an object’s signature. You can inspect the signature of an object with <code>inspect.signature</code>:</p>
 <p>Interesting! <code>FixSigMeta??</code> won’t give us the source code, neither can <code>inspect.getsource</code> on it.</p>
 <section id="fixsigmeta-examples" class="level3">
-<h3 class="anchored" data-anchor-id="fixsigmeta-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#fixsigmeta"><code>FixSigMeta</code></a> examples</h3>
+<h3 class="anchored" data-anchor-id="fixsigmeta-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#fixsigmeta"><code>FixSigMeta</code></a> examples</h3>
 <section id="examples-not-really-working-effectively" class="level4">
 <h4 class="anchored" data-anchor-id="examples-not-really-working-effectively">examples not really working effectively</h4>
 <div class="cell">
@@ -2071,7 +2086,7 @@ Type:           type</code></pre>
 &lt;Signature (self, d, e, f)&gt;</code></pre>
 </div>
 </div>
-<p>Finally, the signature and tab completion can be restored by inheriting from the metaclass&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;as shown below:</p>
+<p>Finally, the signature and tab completion can be restored by inheriting from the metaclass&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;as shown below:</p>
 </section>
 <section id="how-fixsigmeta-when-inherit-a-class-override-__new__" class="level4">
 <h4 class="anchored" data-anchor-id="how-fixsigmeta-when-inherit-a-class-override-__new__">how-FixSigMeta: when inherit a class override <code>__new__</code></h4>
@@ -2180,7 +2195,7 @@ local variables available to Bar.__init__:
 </div>
 <section id="how-fixsigmeta-when-inherit-a-metaclass-to-override-__call__" class="level4">
 <h4 class="anchored" data-anchor-id="how-fixsigmeta-when-inherit-a-metaclass-to-override-__call__">how-FixSigMeta: when inherit a metaclass to override <code>__call__</code></h4>
-<p>If you need to define a metaclass that overrides&nbsp;<code>__call__</code>&nbsp;(as done in&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#prepostinitmeta"><code>PrePostInitMeta</code></a>), you need to inherit from&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;instead of&nbsp;<code>type</code>&nbsp;when constructing the metaclass to preserve the signature in&nbsp;<code>__init__</code>. Be careful not to override&nbsp;<code>__new__</code>&nbsp;when doing this:</p>
+<p>If you need to define a metaclass that overrides&nbsp;<code>__call__</code>&nbsp;(as done in&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#prepostinitmeta"><code>PrePostInitMeta</code></a>), you need to inherit from&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;instead of&nbsp;<code>type</code>&nbsp;when constructing the metaclass to preserve the signature in&nbsp;<code>__init__</code>. Be careful not to override&nbsp;<code>__new__</code>&nbsp;when doing this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb240"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestMeta(FixSigMeta): <span class="co"># making a subclass of FixSigMeta, which overrides __call__</span></span>
 <span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># __new__ comes from FixSigMeta</span></span>
@@ -2223,7 +2238,7 @@ end of metaclass FixSigMeta.__new__
 <div class="cell">
 <div class="sourceCode cell-code" id="cb243"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a>test_sig(T, <span class="st">'(a, b)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>On the other hand, if you fail to inherit from&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;when inheriting from a metaclass that overrides&nbsp;<code>__call__</code>, your signature will reflect that of&nbsp;<code>__call__</code>&nbsp;instead (which is often undesirable):</p>
+<p>On the other hand, if you fail to inherit from&nbsp;<a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#fixsigmeta"><code>FixSigMeta</code></a>&nbsp;when inheriting from a metaclass that overrides&nbsp;<code>__call__</code>, your signature will reflect that of&nbsp;<code>__call__</code>&nbsp;instead (which is often undesirable):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb244"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb244-1"><a href="#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GenericMeta(<span class="bu">type</span>): <span class="co"># create a metaclass from type and overrides both __new__ and __call_</span></span>
 <span id="cb244-2"><a href="#cb244-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"A boilerplate metaclass that doesn't do anything for testing."</span></span>
@@ -2405,7 +2420,7 @@ T2's bases are: (&lt;class 'object'&gt;,)
 </div>
 </section>
 <section id="prepostinitmeta-examples" class="level3">
-<h3 class="anchored" data-anchor-id="prepostinitmeta-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#prepostinitmeta"><code>PrePostInitMeta</code></a> examples</h3>
+<h3 class="anchored" data-anchor-id="prepostinitmeta-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#prepostinitmeta"><code>PrePostInitMeta</code></a> examples</h3>
 <p>A metaclass that calls optional <code>__pre_init__</code> and <code>__post_init__</code> methods <code>__pre_init__</code> and <code>__post_init__</code> are useful for initializing variables or performing tasks prior to or after <code>__init__</code> being called, respectively. Fore example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb261"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb261-1"><a href="#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When creating an instance class by metaclass PrePostInitMeta, </span></span>
@@ -2515,10 +2530,10 @@ finally, return the initialized object of class _T
 <h2 class="anchored" data-anchor-id="section-7"></h2>
 </section>
 <section id="autoinit" class="level2">
-<h2 class="anchored" data-anchor-id="autoinit"><a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#autoinit"><code>AutoInit</code></a></h2>
-<p>how-super: a good <a href="https://stackoverflow.com/questions/576169/understanding-python-super-with-init-methods">answer</a> on <code>super</code> and a <a href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/">great guide</a>? and see <a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#prepostinitmeta"><code>PrePostInitMeta</code></a> and <a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#autoinit"><code>AutoInit</code></a> make it even better!</p>
+<h2 class="anchored" data-anchor-id="autoinit"><a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#autoinit"><code>AutoInit</code></a></h2>
+<p>how-super: a good <a href="https://stackoverflow.com/questions/576169/understanding-python-super-with-init-methods">answer</a> on <code>super</code> and a <a href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/">great guide</a>? and see <a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#prepostinitmeta"><code>PrePostInitMeta</code></a> and <a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#autoinit"><code>AutoInit</code></a> make it even better!</p>
 <section id="autoinit-source" class="level3">
-<h3 class="anchored" data-anchor-id="autoinit-source"><a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#autoinit"><code>AutoInit</code></a> source</h3>
+<h3 class="anchored" data-anchor-id="autoinit-source"><a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#autoinit"><code>AutoInit</code></a> source</h3>
 <hr>
 </section>
 <section id="autoinit-1" class="level3">
@@ -2529,9 +2544,9 @@ finally, return the initialized object of class _T
 <p>Same as <code>object</code>, but no need for subclasses to call <code>super().__init__</code></p>
 </section>
 <section id="autoinit-examples" class="level3">
-<h3 class="anchored" data-anchor-id="autoinit-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#autoinit"><code>AutoInit</code></a> examples</h3>
+<h3 class="anchored" data-anchor-id="autoinit-examples"><a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#autoinit"><code>AutoInit</code></a> examples</h3>
 <p>how-prepostinitmeta: in fastai <a href="https://github.com/fastai/fastai/search?q=PrePostInitMeta">code</a></p>
-<p>how-autoinit: use <a href="https://EmbraceLife.github.io/debuggable/fastcoremeta.html#autoinit"><code>AutoInit</code></a> in real life. This is normally used as a mixin, eg:</p>
+<p>how-autoinit: use <a href="https://EmbraceLife.github.io/debuggable/fastcore/previous/delegates.html#autoinit"><code>AutoInit</code></a> in real life. This is normally used as a mixin, eg:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb267"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TestParent():</span>
 <span id="cb267-2"><a href="#cb267-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>): <span class="va">self</span>.h <span class="op">=</span> <span class="dv">10</span></span>
@@ -2632,7 +2647,6 @@ finally, return the initialized object of class TestChild
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

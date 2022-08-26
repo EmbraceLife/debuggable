@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['defaults', 'whatinside', 'whichversion', 'checksource', 'alignright', 'dbcolors', 'colorize', 'dbprint',
-           'insert2debug', 'dbsrclines']
+           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi']
 
 # %% ../utils.ipynb 3
 from inspect import getmembers, isfunction, isclass, isbuiltin, getsource
@@ -124,7 +124,7 @@ def colorize(cmt, color:str=None):
     else: 
         return cmt
 
-# %% ../utils.ipynb 151
+# %% ../utils.ipynb 153
 def dbprint(src:str, # the source to debug in str
             cmt:str,
             *code,   # a number of codes to run, each code is in str, e.g., "a + b", "c = a - b"
@@ -161,12 +161,20 @@ def dbprint(src:str, # the source to debug in str
         for l in lst: 
             if bool(l) and l.strip() in src: # how to make sure all these ls are close to each other???
                 print('{:=<157}'.format(l))
+                ccount = ccount + 1
                 
-                if bool(cmt):
-                    clst = cmt.split('\n') 
-                    if ccount <= len(clst)-1:
-                        print('{:>157}'.format(colorize(clst[ccount], "r")))
-                        ccount = ccount + 1
+                if bool(cmt): # make sure the comments are colored and aligned to the most right
+                    # if this is the last srcline of the srcblock under investigation
+                    numsrclines = len(src.split("\n"))
+                    if ccount == numsrclines:
+                        colcmt = colorize(cmt, "r")
+                        alignright(colcmt)
+                    # clst = cmt.split('\n') 
+                    # if ccount <= len(clst)-1:
+                    #     # print('{:>157}'.format(colorize(clst[ccount], "r")))
+                    #     colcmt = colorize(clst[ccount], "r")
+                    #     alignright(colcmt)
+                    #     ccount = ccount + 1
 
             else: 
                 print('{:<157}'.format(l))
@@ -302,7 +310,7 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 159
+# %% ../utils.ipynb 161
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
@@ -334,10 +342,10 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     else: 
         return None
 
-# %% ../utils.ipynb 161
+# %% ../utils.ipynb 163
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 165
+# %% ../utils.ipynb 169
 def dbsrclines(srcname:str, # name of the source code, e.g., delegates
                lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
                dbsrc:bool = False # get the full debuggable source code
@@ -346,20 +354,27 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
     
-    if not bool(lines) and dbsrc == False: # to print out all the srclines and dbprints
+    if not bool(lines) and dbsrc == False: # to print out the source code and mark all the srclines 
+        # put all srclines into a single string
+        srclines = ""
         for i in srcdblist:
-            pprint(i[0][0], width=157)
-            pprint(i[0][1], width=157)
-            print("")
+            srclines = srclines + i[0][0]
+        
+        for l in defaults.src.split("\n"):
+            if l in srclines:
+                print('{:=<157}'.format(l))
+            else: 
+                print('{:<157}'.format(l))
+        print("")
         return None
      
-    if dbsrc and not bool(lines): # to print out the entire debuggable source code
+    if dbsrc and not bool(lines): # to export the entire debuggable source code to defaults.src2dbp.delegatesdb
         defaults.multi = True
         for i in srcdblist:
             insert2debug(srcname, i[0][0], i[0][1], run=False) # don't exec just add up debuggable source
         # export the debuggable source
         defaults.src2dbp.delegatesdb = defaults.deb
-        pprint(defaults.src2dbp.delegatesdb, width=157)
+        # pprint(defaults.src2dbp.delegatesdb, width=157)
         defaults.deb = None
         defaults.multi = False
         return None
@@ -378,3 +393,35 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
     defaults.multi = False
     defaults.deb = None
     return delegates
+
+# %% ../utils.ipynb 171
+def checksrc(srcname):
+    "check src code against dbsource"
+    defaults.src = inspect.getsource(eval(srcname))
+
+    file1 = open("db/" + srcname + ".txt","r+") 
+
+    # now dbsrc == defaults.src2dbp.delegatesdb
+    dbsrc = eval("defaults.src2dbp." + srcname + "db")
+    dbsrc = file1.read()
+    file1.close()
+
+    lst = defaults.src.split('\n')
+    for l in lst: 
+
+        if l.strip() in dbsrc:
+            print('{:<157}'.format(l))
+        else: 
+            print('{:=<157}'.format(l))
+
+# %% ../utils.ipynb 172
+def strip_ansi(source):
+    return re.sub(r'\033\[(\d|;)+?m', '', source)
+
+# %% ../utils.ipynb 173
+def alignright(blocks):
+    lst = blocks.split('\n')
+    maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
+    indent = defaults.margin - maxlen
+    for l in lst:
+        print(' '*indent + format(l))

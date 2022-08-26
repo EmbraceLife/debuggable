@@ -1,0 +1,34 @@
+def delegates(to:FunctionType=None, # Delegatee
+              keep=False, # Keep `kwargs` in decorated function?
+              but:list=None): # Exclude these parameters from signature
+    "Decorator: replace `**kwargs` in signature with params from `to`"
+    if but is None: but = []
+    def _f(f):
+
+        dbprint("        if to is None: to_f,from_f = f.__base__.__init__,f.__init__\n\        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f","UseCase1: when to is superclass to f\nUseCase2: when to is a class but not superclass to f. UseCase3: other combinations","if to is None:\n    to_f,from_f = f.__base__.__init__,f.__init__\nelse:\n    to_f,from_f = to.__init__ if isinstance(to,type) else to,f","to_f", "from_f", "hasattr(to_f, '__annotations__')", "hasattr(from_f, '__annotations__')", f=f, to=to)
+
+        if to is None: to_f,from_f = f.__base__.__init__,f.__init__
+        else:          to_f,from_f = to.__init__ if isinstance(to,type) else to,f
+
+        dbprint("        from_f = getattr(from_f,'__func__',from_f)\n\        to_f = getattr(to_f,'__func__',to_f)","This line is for classmethod, as it is not callable, so inspect.signature(...) won't work, but it has __func__ to save","f", "from_f", "type(from_f)","try:\n    inspect.signature(from_f)\nexcept:\n    print('error occurs')\n    print(f'is from_f callable: {callable(from_f)}')\nelse:\n    print(inspect.signature(from_f))", "hasattr(from_f, '__func__')", "from_f = getattr(from_f,'__func__',from_f)", "from_f","to", "to_f", "type(to_f)","try:\n    inspect.signature(to_f)\nexcept:\n    print('error occurs')\n    print(f'is to_f callable: {callable(to_f)}')\nelse:\n    print(inspect.signature(to_f))", "hasattr(to_f, '__func__')", "to_f = getattr(to_f,'__func__',to_f)", "to_f",from_f=from_f, to_f=to_f, f=f, to=to, srcline=srcline)
+
+        from_f = getattr(from_f,'__func__',from_f)
+        to_f = getattr(to_f,'__func__',to_f)
+
+        dbprint("if hasattr(from_f,'__delwrap__'): return f", "If f or from_f has __delwrap__, it means it's happy with all params and give up on **kwargs. So no more params needed from other `to`s", "from_f", "f", "hasattr(from_f, '__delwrap__')", "if hasattr(from_f,'__delwrap__'): return f", from_f=from_f, f=f)
+        if hasattr(from_f,'__delwrap__'): return f
+        sig = inspect.signature(from_f)
+        sigd = dict(sig.parameters)
+        k = sigd.pop('kwargs')
+        s2 = {k:v.replace(kind=inspect.Parameter.KEYWORD_ONLY) for k,v in inspect.signature(to_f).parameters.items()
+              if v.default != inspect.Parameter.empty and k not in sigd and k not in but}
+
+        dbprint("        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}", "what it does: check to_f's annotations (dict), and only select params with their annotations wanted by f or from_f.", "hasattr(to_f, '__annotations__')", "if hasattr(to_f, '__annotations__'):\n    for k,v in to_f.__annotations__.items():\n        print(f'k:v => {k}:{v}')\nelse:\n    print(f'We should expect error from the code of try-except.')\n    try:\n        to_f.__annotations__\n    except AttributeError as e:\n        print(e)", but=but, k=k, sigd=sigd, to_f=to_f)
+        anno = {k:v for k,v in to_f.__annotations__.items() if k not in sigd and k not in but}
+        sigd.update(s2)
+        if keep: sigd['kwargs'] = k
+        else: from_f.__delwrap__ = to_f
+        from_f.__signature__ = sig.replace(parameters=sigd.values())
+        if hasattr(from_f, '__annotations__'): from_f.__annotations__.update(anno)
+        return f
+    return _f

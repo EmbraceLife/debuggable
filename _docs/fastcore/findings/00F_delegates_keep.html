@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>debuggable – f_delegates_keep</title>
+<title>../../debuggable - Findings from fastcore.meta.delegates</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -119,6 +119,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="../../debuggable - Findings from fastcore.meta.delegates">
+<meta property="og:description" content="The docs of delegates tells us if keep=False, **kwargs of func mid (example below) will be removed; keep=True will keep **kwargs for mid.">
+<meta property="og:site-name" content="../../debuggable">
+<meta name="twitter:title" content="../../debuggable - Findings from fastcore.meta.delegates">
+<meta name="twitter:description" content="The docs of delegates tells us if keep=False, **kwargs of func mid (example below) will be removed; keep=True will keep **kwargs for mid.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -154,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <h1 class="quarto-secondary-nav-title">Findings from <code>fastcore.meta.delegates</code></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -205,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link active">Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></a>
+  <a href="../../fastcore/findings/00F_delegates_keep.html" class="sidebar-item-text sidebar-link active">Findings from <code>fastcore.meta.delegates</code></a>
   </div>
 </li>
       </ul>
@@ -261,9 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#findings-from-fastcore.meta.delegates" id="toc-findings-from-fastcore.meta.delegates" class="nav-link active" data-scroll-target="#findings-from-fastcore.meta.delegates">Findings from <span><code>fastcore.meta.delegates</code></span></a>
-  <ul class="collapse">
-  <li><a href="#the-undocumented-feature-of-arg-keep-in-function-delegates" id="toc-the-undocumented-feature-of-arg-keep-in-function-delegates" class="nav-link" data-scroll-target="#the-undocumented-feature-of-arg-keep-in-function-delegates">The undocumented feature of arg <code>keep</code> in function <code>delegates</code></a></li>
+  <li><a href="#the-undocumented-feature-of-arg-keep-in-function-delegates" id="toc-the-undocumented-feature-of-arg-keep-in-function-delegates" class="nav-link active" data-scroll-target="#the-undocumented-feature-of-arg-keep-in-function-delegates">The undocumented feature of arg <code>keep</code> in function <code>delegates</code></a></li>
   <li><a href="#the-hidden-or-unexpected-feature-of-keep-of-delegates" id="toc-the-hidden-or-unexpected-feature-of-keep-of-delegates" class="nav-link" data-scroll-target="#the-hidden-or-unexpected-feature-of-keep-of-delegates">The hidden or unexpected feature of <code>keep</code> of <code>delegates</code></a>
   <ul class="collapse">
   <li><a href="#mid" id="toc-mid" class="nav-link" data-scroll-target="#mid">mid</a></li>
@@ -280,17 +284,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#mid-3" id="toc-mid-3" class="nav-link" data-scroll-target="#mid-3">mid</a></li>
   <li><a href="#high-2" id="toc-high-2" class="nav-link" data-scroll-target="#high-2">high</a></li>
   </ul></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/EmbraceLife/debuggable/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Findings from <code>fastcore.meta.delegates</code></h1>
+</div>
 
 
-<section id="findings-from-fastcore.meta.delegates" class="level1">
-<h1>Findings from <a href="https://fastcore.fast.ai/meta.html#delegates"><code>fastcore.meta.delegates</code></a></h1>
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.imports <span class="im">import</span> <span class="op">*</span></span>
@@ -341,30 +356,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>So, you are out of luck, if you want to keep both <code>**kwargs</code> and display the address info of <code>b</code> at the same time.</p>
 <p>Note: see how <code>f.__delwrap__</code> help <code>showdoc</code> to generate the address info of <code>b</code> from <a href="https://github.com/fastai/nbdev1/blob/675dd1230e0738ecb2bdc505d52a49cf24709a63/nbdev/showdoc.py#L355-L364">here</a>.</p>
 <hr>
-<section id="mid" class="level4">
-<h4 class="anchored" data-anchor-id="mid">mid</h4>
+<section id="mid" class="level3">
+<h3 class="anchored" data-anchor-id="mid">mid</h3>
 <blockquote class="blockquote">
 <pre><code> mid (c, d=1, b=1)</code></pre>
 </blockquote>
 <hr>
 </section>
-<section id="high" class="level4">
-<h4 class="anchored" data-anchor-id="high">high</h4>
+<section id="high" class="level3">
+<h3 class="anchored" data-anchor-id="high">high</h3>
 <blockquote class="blockquote">
 <pre><code> high (e, f=1, d=1, b=1)</code></pre>
 </blockquote>
 <p>You can keep <code>**kwargs</code>, but you can’t have the address info of <code>b</code> for <code>mid</code>, and <code>d</code> and <code>b</code> for <code>high</code>.</p>
 <hr>
 </section>
-<section id="mid-1" class="level4">
-<h4 class="anchored" data-anchor-id="mid-1">mid</h4>
+<section id="mid-1" class="level3">
+<h3 class="anchored" data-anchor-id="mid-1">mid</h3>
 <blockquote class="blockquote">
 <pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
 </blockquote>
 <hr>
 </section>
-<section id="high-1" class="level4">
-<h4 class="anchored" data-anchor-id="high-1">high</h4>
+<section id="high-1" class="level3">
+<h3 class="anchored" data-anchor-id="high-1">high</h3>
 <blockquote class="blockquote">
 <pre><code> high (e, f=1, d=1, b=1, **kwargs)</code></pre>
 </blockquote>
@@ -393,8 +408,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <hr>
-<section id="mid-2" class="level4">
-<h4 class="anchored" data-anchor-id="mid-2">mid</h4>
+<section id="mid-2" class="level3">
+<h3 class="anchored" data-anchor-id="mid-2">mid</h3>
 <blockquote class="blockquote">
 <pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
 </blockquote>
@@ -485,8 +500,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <hr>
-<section id="mid-3" class="level4">
-<h4 class="anchored" data-anchor-id="mid-3">mid</h4>
+<section id="mid-3" class="level3">
+<h3 class="anchored" data-anchor-id="mid-3">mid</h3>
 <blockquote class="blockquote">
 <pre><code> mid (c, d=1, b=1, **kwargs)</code></pre>
 </blockquote>
@@ -501,8 +516,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <hr>
 </section>
-<section id="high-2" class="level4">
-<h4 class="anchored" data-anchor-id="high-2">high</h4>
+<section id="high-2" class="level3">
+<h3 class="anchored" data-anchor-id="high-2">high</h3>
 <blockquote class="blockquote">
 <pre><code> high (e, f=1, d=1, b=1, **kwargs)</code></pre>
 </blockquote>
@@ -515,7 +530,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 
 
-</section>
 </section>
 </section>
 
