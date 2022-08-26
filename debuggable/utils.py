@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['defaults', 'whatinside', 'whichversion', 'checksource', 'alignright', 'dbcolors', 'colorize', 'dbprint',
-           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi']
+           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi', 'matchsrcorder']
 
 # %% ../utils.ipynb 3
 from inspect import getmembers, isfunction, isclass, isbuiltin, getsource
@@ -425,3 +425,14 @@ def alignright(blocks):
     indent = defaults.margin - maxlen
     for l in lst:
         print(' '*indent + format(l))
+
+# %% ../utils.ipynb 188
+def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
+                 ):
+    srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
+    for l in defaults.src.split("\n"):
+        for idx, s in zip(range(len(srcdbps)), srcdbps):
+            if l.strip() in s[0][0]:
+                srcdbps.pop(idx)
+                srcdbps1.append(s)  
+    return srcdbps1
