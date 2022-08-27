@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['defaults', 'whatinside', 'whichversion', 'checksource', 'alignright', 'dbcolors', 'colorize', 'dbprint',
-           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi', 'matchsrcorder']
+           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi', 'matchsrcorder', 'displaysrc']
 
 # %% ../utils.ipynb 3
 from inspect import getmembers, isfunction, isclass, isbuiltin, getsource
@@ -89,7 +89,9 @@ def checksource():
 defaults = type('defaults', (object,), {'block': False, # whether inside a block of code investigation or not
                                      'src': None, # store the source code of the functiong being debugged
                                      'deb': None, # store the debuggable source code
-                                     'checksource': checksource, # check and display how official source code differs from debuggable
+                                     'name': None, # the name of the func to be debugged
+                                     'startsrc': None, # a piece of str in the starting line of the src code
+                                     'endsrc': None, # a piece of str in the ending line of the src code
                                      'eg': None, # save an example in str
                                      'margin': 157, # for align to the right
                                      'multi': False, # debugging multiline source codes
@@ -98,7 +100,7 @@ defaults = type('defaults', (object,), {'block': False, # whether inside a block
                                                                                  }) # store a list of (srcline, dbcode)
                                     }) 
 
-# %% ../utils.ipynb 141
+# %% ../utils.ipynb 142
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(l) , lst ))
@@ -106,14 +108,14 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 146
+# %% ../utils.ipynb 147
 class dbcolors:
     g = '\033[92m' #GREEN
     y = '\033[93m' #YELLOW
     r = '\033[91m' #RED
     reset = '\033[0m' #RESET COLOR
 
-# %% ../utils.ipynb 147
+# %% ../utils.ipynb 148
 def colorize(cmt, color:str=None):
     if color == "g":
         return dbcolors.g + cmt + dbcolors.reset
@@ -124,7 +126,7 @@ def colorize(cmt, color:str=None):
     else: 
         return cmt
 
-# %% ../utils.ipynb 153
+# %% ../utils.ipynb 154
 def dbprint(src:str, # the source to debug in str
             cmt:str,
             *code,   # a number of codes to run, each code is in str, e.g., "a + b", "c = a - b"
@@ -310,7 +312,7 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 163
+# %% ../utils.ipynb 164
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
@@ -347,16 +349,16 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     else: 
         return None
 
-# %% ../utils.ipynb 165
+# %% ../utils.ipynb 166
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 173
-def dbsrclines(srcname:str, # name of the source code, e.g., delegates
-               lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
+# %% ../utils.ipynb 175
+def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
                dbsrc:bool = False, # get the full debuggable source code
                retn:bool = False # choose to add return None after the last dbcode
               ): 
     "Doing one line or multilines of insert2debug on source code with dbprints."
+    srcname = defaults.name
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
     
@@ -404,9 +406,10 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 175
-def checksrc(srcname):
-    "check src code against dbsource"
+# %% ../utils.ipynb 178
+def checksrc():
+    "check src code against dbsource. Also the latest srcode is stored inside defaults.src."
+    srcname = defaults.name
     defaults.src = inspect.getsource(eval(srcname))
 
     # file1 = open("db/" + srcname + ".txt","r+") 
@@ -424,11 +427,11 @@ def checksrc(srcname):
         else: 
             print('{:=<157}'.format(l))
 
-# %% ../utils.ipynb 176
+# %% ../utils.ipynb 179
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 177
+# %% ../utils.ipynb 180
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -436,7 +439,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 192
+# %% ../utils.ipynb 195
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
@@ -446,3 +449,34 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps.pop(idx)
                 srcdbps1.append(s)  
     return srcdbps1
+
+# %% ../utils.ipynb 199
+def displaysrc():
+    srcname = defaults.name # name of src code like delegates
+    startsrc = defaults.startsrc # a piece of code like "if to is None"
+    endsrc = defaults.endsrc # a piece of code like "from_f.__annotations__.update(anno)"
+    
+    srcdblist = eval("defaults.src2dbp." + srcname)
+    srcdblist = L(srcdblist)
+    
+    srclines = "" # store all the debuggable srclines here
+    for i in srcdblist:
+        srclines = srclines + i[0][0]
+    
+    idx = 0
+    mark = False
+    for l in defaults.src.split("\n"):
+
+        # to mark the index for the targed src codes
+        if startsrc in l: mark = True
+        if mark:
+            if l in srclines:
+                marker = f'( {idx} )' + "====="
+            else:
+                marker = f'( {idx} )' + "     "
+            indent = defaults.margin - len(l) - len(marker)
+            print(l + " "*indent + marker)
+            idx = idx + 1
+            if endsrc in l: mark = False
+        else:
+            print(l)
