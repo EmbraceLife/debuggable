@@ -310,11 +310,12 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 161
+# %% ../utils.ipynb 163
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
                  run:bool=True, # run exec or not
+                 dberror:bool=False, # choose to debug error in source code by setting return None or not
                  **env):
     "select a line or a block of source code and insert a dbprint above it and only output this dbprint result."
     
@@ -325,11 +326,15 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
         # srcode = inspect.getsource(eval(name, globals().update(env)))
         srcode = defaults.src
     lstxt = srcode.split(srcline)
-    retn = "" # retn = "\n        return None\n" to exit the function, "" to continue on
+    retn = "" 
+    if dberror: 
+        retn = retn + "\n        return None\n" #  to exit the function, "" to continue on
+
+
     insert = colorize(dbcode, "g") + colorize(srcline, "r") + colorize(retn, "y")
     src2print = lstxt[0] + insert + lstxt[1]
             
-    src2db = lstxt[0] + dbcode + srcline + retn + lstxt[1]
+    src2db = lstxt[0] + dbcode + retn + srcline + lstxt[1] # make sure return is before srcline and after dbcode
     # if defaults.multi: defaults.deb = src2db
     defaults.deb = src2db
     
@@ -342,13 +347,14 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     else: 
         return None
 
-# %% ../utils.ipynb 163
+# %% ../utils.ipynb 165
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 169
+# %% ../utils.ipynb 173
 def dbsrclines(srcname:str, # name of the source code, e.g., delegates
                lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
-               dbsrc:bool = False # get the full debuggable source code
+               dbsrc:bool = False, # get the full debuggable source code
+               retn:bool = False # choose to add return None after the last dbcode
               ): 
     "Doing one line or multilines of insert2debug on source code with dbprints."
     srcdblist = eval("defaults.src2dbp." + srcname)
@@ -368,7 +374,7 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
         print("")
         return None
      
-    if dbsrc and not bool(lines): # to export the entire debuggable source code to defaults.src2dbp.delegatesdb
+    if dbsrc and not bool(lines): # set dbsrc to true to export the entire debuggable source code to defaults.src2dbp.delegatesdb
         defaults.multi = True
         for i in srcdblist:
             insert2debug(srcname, i[0][0], i[0][1], run=False) # don't exec just add up debuggable source
@@ -381,8 +387,12 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
     
     if len(lines) > 1: 
         defaults.multi = True
-        for i in eval("srcdblist" + str(lines)):
-            delegates = insert2debug(srcname, i[0][0], i[0][1])
+        lst = eval("srcdblist" + str(lines))
+        for idx, i in zip(range(len(lst)), lst): # add retn to the last dbcode
+            if retn and idx == len(lst)-1:
+                delegates = insert2debug(srcname, i[0][0], i[0][1], dberror=True) ### add dberror to insert2debug
+            else:
+                delegates = insert2debug(srcname, i[0][0], i[0][1])
 
     else: 
         item = eval("srcdblist" + str(lines))
@@ -394,31 +404,31 @@ def dbsrclines(srcname:str, # name of the source code, e.g., delegates
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 171
+# %% ../utils.ipynb 175
 def checksrc(srcname):
     "check src code against dbsource"
     defaults.src = inspect.getsource(eval(srcname))
 
-    file1 = open("db/" + srcname + ".txt","r+") 
+    # file1 = open("db/" + srcname + ".txt","r+") 
 
     # now dbsrc == defaults.src2dbp.delegatesdb
     dbsrc = eval("defaults.src2dbp." + srcname + "db")
-    dbsrc = file1.read()
-    file1.close()
+    # dbsrc = file1.read()
+    # file1.close()
 
     lst = defaults.src.split('\n')
     for l in lst: 
 
-        if l.strip() in dbsrc:
+        if bool(dbsrc) and l.strip() in dbsrc:
             print('{:<157}'.format(l))
         else: 
             print('{:=<157}'.format(l))
 
-# %% ../utils.ipynb 172
+# %% ../utils.ipynb 176
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 173
+# %% ../utils.ipynb 177
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -426,7 +436,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 188
+# %% ../utils.ipynb 192
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes

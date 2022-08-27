@@ -314,14 +314,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" id="toc-remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error" class="nav-link" data-scroll-target="#remove-return-none-so-that-we-can-run-multiple-delegates-in-one-cell-without-error">remove <code>return None</code>, so that we can run multiple <code>delegates</code> in one cell without error</a></li>
   <li><a href="#major-problems-solved" id="toc-major-problems-solved" class="nav-link" data-scroll-target="#major-problems-solved">major problems solved</a></li>
+  <li><a href="#debugging-error" id="toc-debugging-error" class="nav-link" data-scroll-target="#debugging-error">debugging error</a></li>
   <li><a href="#insert2debug" id="toc-insert2debug" class="nav-link" data-scroll-target="#insert2debug">insert2debug</a></li>
-  <li><a href="#exporting-the-debuggable-source-and-major-problems-solved" id="toc-exporting-the-debuggable-source-and-major-problems-solved" class="nav-link" data-scroll-target="#exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</a></li>
+  </ul></li>
+  <li><a href="#exporting-the-debuggable-source-and-major-problems-solved" id="toc-exporting-the-debuggable-source-and-major-problems-solved" class="nav-link" data-scroll-target="#exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</a>
+  <ul class="collapse">
   <li><a href="#improve-the-print-feature-of-dbscrlines" id="toc-improve-the-print-feature-of-dbscrlines" class="nav-link" data-scroll-target="#improve-the-print-feature-of-dbscrlines">improve the print feature of dbscrlines</a></li>
+  <li><a href="#add-return-to-the-last-dbcode-for-debugging-examples-which-cause-errors" id="toc-add-return-to-the-last-dbcode-for-debugging-examples-which-cause-errors" class="nav-link" data-scroll-target="#add-return-to-the-last-dbcode-for-debugging-examples-which-cause-errors">add return to the last dbcode for debugging examples which cause errors</a></li>
   <li><a href="#dbsrclines" id="toc-dbsrclines" class="nav-link" data-scroll-target="#dbsrclines">dbsrclines</a></li>
-  <li><a href="#check-official-source-against-debuggable-source" id="toc-check-official-source-against-debuggable-source" class="nav-link" data-scroll-target="#check-official-source-against-debuggable-source">check official source against debuggable source</a></li>
+  </ul></li>
+  <li><a href="#check-official-source-against-debuggable-source" id="toc-check-official-source-against-debuggable-source" class="nav-link" data-scroll-target="#check-official-source-against-debuggable-source">check official source against debuggable source</a>
+  <ul class="collapse">
   <li><a href="#checksrc" id="toc-checksrc" class="nav-link" data-scroll-target="#checksrc">checksrc</a></li>
   <li><a href="#strip_ansi" id="toc-strip_ansi" class="nav-link" data-scroll-target="#strip_ansi">strip_ansi</a></li>
   <li><a href="#alignright-1" id="toc-alignright-1" class="nav-link" data-scroll-target="#alignright-1">alignright</a></li>
+  </ul></li>
+  <li><a href="#how-to-shuffle" id="toc-how-to-shuffle" class="nav-link" data-scroll-target="#how-to-shuffle">How to shuffle</a>
+  <ul class="collapse">
+  <li><a href="#matchsrcorder" id="toc-matchsrcorder" class="nav-link" data-scroll-target="#matchsrcorder">matchsrcorder</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/EmbraceLife/debuggable/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -3775,7 +3785,7 @@ a = 5 != 4 =&gt; a: True</code></pre>
     exec<span class="ansi-blue-fg">(</span>src2db<span class="ansi-blue-fg">,</span> globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">'srcline'</span><span class="ansi-blue-fg">:</span> srcline<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># now a debuggable version of delegates is available to use</span>
     globals<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>name<span class="ansi-blue-fg">:</span>eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
     <span class="ansi-green-fg">return</span> eval<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># give this debuggable version of delegates to the notebook context</span>
-<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_70475/435102324.py
+<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_90372/435102324.py
 <span class="ansi-red-fg">Type:</span>      function
 </pre>
 </div>
@@ -3831,12 +3841,48 @@ a = 5 != 4 =&gt; a: True</code></pre>
 </section>
 <section id="major-problems-solved" class="level3">
 <h3 class="anchored" data-anchor-id="major-problems-solved">major problems solved</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insert2debug(name:<span class="bu">str</span>, <span class="co"># name of a function to debug, e.g., delegates</span></span>
+<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a>                 srcline:<span class="bu">str</span>, <span class="co"># e.g., "        if hasattr(from_f,'__delwrap__'): return f"</span></span>
+<span id="cb200-3"><a href="#cb200-3" aria-hidden="true" tabindex="-1"></a>                 dbcode:<span class="bu">str</span>,  <span class="co"># str, e.g., "dbprint(...)"</span></span>
+<span id="cb200-4"><a href="#cb200-4" aria-hidden="true" tabindex="-1"></a>                 run:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, <span class="co"># run exec or not</span></span>
+<span id="cb200-5"><a href="#cb200-5" aria-hidden="true" tabindex="-1"></a>                 <span class="op">**</span>env):</span>
+<span id="cb200-6"><a href="#cb200-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"select a line or a block of source code and insert a dbprint above it and only output this dbprint result."</span></span>
+<span id="cb200-7"><a href="#cb200-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb200-8"><a href="#cb200-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># defaults.multi default to False, unless set True, defaults.deb is default to None before debugging srcode</span></span>
+<span id="cb200-9"><a href="#cb200-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> defaults.multi <span class="kw">and</span> <span class="bu">bool</span>(defaults.deb): </span>
+<span id="cb200-10"><a href="#cb200-10" aria-hidden="true" tabindex="-1"></a>        srcode <span class="op">=</span> defaults.deb</span>
+<span id="cb200-11"><a href="#cb200-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb200-12"><a href="#cb200-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># srcode = inspect.getsource(eval(name, globals().update(env)))</span></span>
+<span id="cb200-13"><a href="#cb200-13" aria-hidden="true" tabindex="-1"></a>        srcode <span class="op">=</span> defaults.src</span>
+<span id="cb200-14"><a href="#cb200-14" aria-hidden="true" tabindex="-1"></a>    lstxt <span class="op">=</span> srcode.split(srcline)</span>
+<span id="cb200-15"><a href="#cb200-15" aria-hidden="true" tabindex="-1"></a>    retn <span class="op">=</span> <span class="st">""</span> <span class="co"># retn = "\n        return None\n" to exit the function, "" to continue on</span></span>
+<span id="cb200-16"><a href="#cb200-16" aria-hidden="true" tabindex="-1"></a>    insert <span class="op">=</span> colorize(dbcode, <span class="st">"g"</span>) <span class="op">+</span> colorize(srcline, <span class="st">"r"</span>) <span class="op">+</span> colorize(retn, <span class="st">"y"</span>)</span>
+<span id="cb200-17"><a href="#cb200-17" aria-hidden="true" tabindex="-1"></a>    src2print <span class="op">=</span> lstxt[<span class="dv">0</span>] <span class="op">+</span> insert <span class="op">+</span> lstxt[<span class="dv">1</span>]</span>
+<span id="cb200-18"><a href="#cb200-18" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb200-19"><a href="#cb200-19" aria-hidden="true" tabindex="-1"></a>    src2db <span class="op">=</span> lstxt[<span class="dv">0</span>] <span class="op">+</span> dbcode <span class="op">+</span> srcline <span class="op">+</span> retn <span class="op">+</span> lstxt[<span class="dv">1</span>]</span>
+<span id="cb200-20"><a href="#cb200-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if defaults.multi: defaults.deb = src2db</span></span>
+<span id="cb200-21"><a href="#cb200-21" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> src2db</span>
+<span id="cb200-22"><a href="#cb200-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb200-23"><a href="#cb200-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to exec </span></span>
+<span id="cb200-24"><a href="#cb200-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> run: </span>
+<span id="cb200-25"><a href="#cb200-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">exec</span>(src2db, <span class="bu">globals</span>().update({<span class="st">'srcline'</span>: srcline})) <span class="co"># now a debuggable version of delegates is available to use</span></span>
+<span id="cb200-26"><a href="#cb200-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># globals().update({name:eval(name)})</span></span>
+<span id="cb200-27"><a href="#cb200-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">eval</span>(name) <span class="co"># give this debuggable version of delegates to the notebook context</span></span>
+<span id="cb200-28"><a href="#cb200-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to not exec but only get the full debuggable source </span></span>
+<span id="cb200-29"><a href="#cb200-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb200-30"><a href="#cb200-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="debugging-error" class="level3">
+<h3 class="anchored" data-anchor-id="debugging-error">debugging error</h3>
 <hr>
 </section>
 <section id="insert2debug" class="level3">
 <h3 class="anchored" data-anchor-id="insert2debug">insert2debug</h3>
 <blockquote class="blockquote">
-<pre><code> insert2debug (name:str, srcline:str, dbcode:str, run:bool=True, **env)</code></pre>
+<pre><code> insert2debug (name:str, srcline:str, dbcode:str, run:bool=True,
+               dberror:bool=False, **env)</code></pre>
 </blockquote>
 <p>select a line or a block of source code and insert a dbprint above it and only output this dbprint result.</p>
 <table class="table">
@@ -3880,6 +3926,12 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <td>run exec or not</td>
 </tr>
 <tr class="odd">
+<td>dberror</td>
+<td>bool</td>
+<td>False</td>
+<td>choose to debug error in source code by setting return None or not</td>
+</tr>
+<tr class="even">
 <td>env</td>
 <td></td>
 <td></td>
@@ -3888,15 +3940,24 @@ a = 5 != 4 =&gt; a: True</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a>insert2debug??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a>insert2debug??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">Signature:</span> insert2debug<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> srcline<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> dbcode<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span> run<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">)</span>
+<pre><span class="ansi-red-fg">Signature:</span>
+insert2debug<span class="ansi-blue-fg">(</span>
+    name<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span>
+    srcline<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span>
+    dbcode<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">,</span>
+    run<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span>
+    dberror<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span>
+    <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">,</span>
+<span class="ansi-blue-fg">)</span>
 <span class="ansi-red-fg">Source:</span>   
 <span class="ansi-green-fg">def</span> insert2debug<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># name of a function to debug, e.g., delegates</span>
                  srcline<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># e.g., "        if hasattr(from_f,'__delwrap__'): return f"</span>
                  dbcode<span class="ansi-blue-fg">:</span>str<span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># str, e.g., "dbprint(...)"</span>
                  run<span class="ansi-blue-fg">:</span>bool<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># run exec or not</span>
+                 dberror<span class="ansi-blue-fg">:</span>bool<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-red-fg"># choose to debug error in source code by setting return None or not</span>
                  <span class="ansi-blue-fg">**</span>env<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
     <span class="ansi-blue-fg">"select a line or a block of source code and insert a dbprint above it and only output this dbprint result."</span>
     
@@ -3907,11 +3968,13 @@ a = 5 != 4 =&gt; a: True</code></pre>
         <span class="ansi-red-fg"># srcode = inspect.getsource(eval(name, globals().update(env)))</span>
         srcode <span class="ansi-blue-fg">=</span> defaults<span class="ansi-blue-fg">.</span>src
     lstxt <span class="ansi-blue-fg">=</span> srcode<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">(</span>srcline<span class="ansi-blue-fg">)</span>
-    retn <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">""</span> <span class="ansi-red-fg"># retn = "\n        return None\n" to exit the function, "" to continue on</span>
+    retn <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">""</span> 
+    <span class="ansi-green-fg">if</span> dberror<span class="ansi-blue-fg">:</span> 
+        retn <span class="ansi-blue-fg">=</span> retn <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">"\n        return None\n"</span> <span class="ansi-red-fg">#  to exit the function, "" to continue on</span>
     insert <span class="ansi-blue-fg">=</span> colorize<span class="ansi-blue-fg">(</span>dbcode<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"g"</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> colorize<span class="ansi-blue-fg">(</span>srcline<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"r"</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> colorize<span class="ansi-blue-fg">(</span>retn<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"y"</span><span class="ansi-blue-fg">)</span>
     src2print <span class="ansi-blue-fg">=</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> insert <span class="ansi-blue-fg">+</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
             
-    src2db <span class="ansi-blue-fg">=</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> dbcode <span class="ansi-blue-fg">+</span> srcline <span class="ansi-blue-fg">+</span> retn <span class="ansi-blue-fg">+</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
+    src2db <span class="ansi-blue-fg">=</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> dbcode <span class="ansi-blue-fg">+</span> retn <span class="ansi-blue-fg">+</span> srcline <span class="ansi-blue-fg">+</span> lstxt<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span> <span class="ansi-red-fg"># make sure return is before srcline and after dbcode</span>
     <span class="ansi-red-fg"># if defaults.multi: defaults.deb = src2db</span>
     defaults<span class="ansi-blue-fg">.</span>deb <span class="ansi-blue-fg">=</span> src2db
     
@@ -3923,102 +3986,155 @@ a = 5 != 4 =&gt; a: True</code></pre>
     <span class="ansi-red-fg"># to not exec but only get the full debuggable source </span>
     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> 
         <span class="ansi-green-fg">return</span> <span class="ansi-green-fg">None</span>
-<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_70475/1472485447.py
+<span class="ansi-red-fg">File:</span>      /var/folders/gz/ch3n2mp51m9386sytqf97s6w0000gn/T/ipykernel_90372/2335954138.py
 <span class="ansi-red-fg">Type:</span>      function
 </pre>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
-<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span> <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
-<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a>              ): </span>
-<span id="cb202-4"><a href="#cb202-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
-<span id="cb202-5"><a href="#cb202-5" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
-<span id="cb202-6"><a href="#cb202-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
-<span id="cb202-7"><a href="#cb202-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb202-8"><a href="#cb202-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines):</span>
-<span id="cb202-9"><a href="#cb202-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
-<span id="cb202-10"><a href="#cb202-10" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">0</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
-<span id="cb202-11"><a href="#cb202-11" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">1</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
-<span id="cb202-12"><a href="#cb202-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb202-13"><a href="#cb202-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb202-14"><a href="#cb202-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb202-15"><a href="#cb202-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
-<span id="cb202-16"><a href="#cb202-16" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb202-17"><a href="#cb202-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
-<span id="cb202-18"><a href="#cb202-18" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
-<span id="cb202-19"><a href="#cb202-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
-<span id="cb202-20"><a href="#cb202-20" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
-<span id="cb202-21"><a href="#cb202-21" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
-<span id="cb202-22"><a href="#cb202-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb202-23"><a href="#cb202-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb202-24"><a href="#cb202-24" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb202-25"><a href="#cb202-25" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb202-26"><a href="#cb202-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
+<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span> <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
+<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a>              ): </span>
+<span id="cb203-4"><a href="#cb203-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
+<span id="cb203-5"><a href="#cb203-5" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
+<span id="cb203-6"><a href="#cb203-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
+<span id="cb203-7"><a href="#cb203-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-8"><a href="#cb203-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines):</span>
+<span id="cb203-9"><a href="#cb203-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb203-10"><a href="#cb203-10" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">0</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb203-11"><a href="#cb203-11" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">1</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb203-12"><a href="#cb203-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb203-13"><a href="#cb203-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb203-14"><a href="#cb203-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-15"><a href="#cb203-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
+<span id="cb203-16"><a href="#cb203-16" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb203-17"><a href="#cb203-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
+<span id="cb203-18"><a href="#cb203-18" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb203-19"><a href="#cb203-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb203-20"><a href="#cb203-20" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
+<span id="cb203-21"><a href="#cb203-21" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb203-22"><a href="#cb203-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb203-23"><a href="#cb203-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb203-24"><a href="#cb203-24" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb203-25"><a href="#cb203-25" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb203-26"><a href="#cb203-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> L([[(<span class="dv">1</span>,<span class="dv">2</span>)],[(<span class="dv">2</span>,<span class="dv">2</span>)]]): </span>
-<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> L([[(<span class="dv">1</span>,<span class="dv">2</span>)],[(<span class="dv">2</span>,<span class="dv">2</span>)]]): </span>
+<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[(1, 2)]
 [(2, 2)]</code></pre>
 </div>
 </div>
 </section>
-<section id="exporting-the-debuggable-source-and-major-problems-solved" class="level3">
-<h3 class="anchored" data-anchor-id="exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
-<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span>, <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
-<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a>               dbsrc:<span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span> <span class="co"># get the full debuggable source code</span></span>
-<span id="cb205-4"><a href="#cb205-4" aria-hidden="true" tabindex="-1"></a>              ): </span>
-<span id="cb205-5"><a href="#cb205-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
-<span id="cb205-6"><a href="#cb205-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
-<span id="cb205-7"><a href="#cb205-7" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
-<span id="cb205-8"><a href="#cb205-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb205-9"><a href="#cb205-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines) <span class="kw">and</span> dbsrc <span class="op">==</span> <span class="va">False</span>: <span class="co"># to print out the source code and mark all the srclines </span></span>
-<span id="cb205-10"><a href="#cb205-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
-<span id="cb205-11"><a href="#cb205-11" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">0</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
-<span id="cb205-12"><a href="#cb205-12" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">1</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
-<span id="cb205-13"><a href="#cb205-13" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb205-14"><a href="#cb205-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb205-15"><a href="#cb205-15" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb205-16"><a href="#cb205-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dbsrc <span class="kw">and</span> <span class="kw">not</span> <span class="bu">bool</span>(lines): <span class="co"># to print out the entire debuggable source code</span></span>
-<span id="cb205-17"><a href="#cb205-17" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb205-18"><a href="#cb205-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
-<span id="cb205-19"><a href="#cb205-19" aria-hidden="true" tabindex="-1"></a>            insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>], run<span class="op">=</span><span class="va">False</span>) <span class="co"># don't exec just add up debuggable source</span></span>
-<span id="cb205-20"><a href="#cb205-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># export the debuggable source</span></span>
-<span id="cb205-21"><a href="#cb205-21" aria-hidden="true" tabindex="-1"></a>        defaults.src2dbp.delegatesdb <span class="op">=</span> defaults.deb</span>
-<span id="cb205-22"><a href="#cb205-22" aria-hidden="true" tabindex="-1"></a>        pprint(defaults.src2dbp.delegatesdb, width<span class="op">=</span><span class="dv">157</span>)</span>
-<span id="cb205-23"><a href="#cb205-23" aria-hidden="true" tabindex="-1"></a>        defaults.deb <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb205-24"><a href="#cb205-24" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb205-25"><a href="#cb205-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb205-26"><a href="#cb205-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb205-27"><a href="#cb205-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
-<span id="cb205-28"><a href="#cb205-28" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb205-29"><a href="#cb205-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
-<span id="cb205-30"><a href="#cb205-30" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
-<span id="cb205-31"><a href="#cb205-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-32"><a href="#cb205-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
-<span id="cb205-33"><a href="#cb205-33" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
-<span id="cb205-34"><a href="#cb205-34" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
-<span id="cb205-35"><a href="#cb205-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-36"><a href="#cb205-36" aria-hidden="true" tabindex="-1"></a>    pprint(defaults.deb, width<span class="op">=</span><span class="dv">157</span>) <span class="co"># print the debuggable source</span></span>
-<span id="cb205-37"><a href="#cb205-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb205-38"><a href="#cb205-38" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb205-39"><a href="#cb205-39" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb205-40"><a href="#cb205-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
+<section id="exporting-the-debuggable-source-and-major-problems-solved" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-the-debuggable-source-and-major-problems-solved">Exporting the debuggable source and major problems solved</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
+<span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span>, <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
+<span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a>               dbsrc:<span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span> <span class="co"># get the full debuggable source code</span></span>
+<span id="cb206-4"><a href="#cb206-4" aria-hidden="true" tabindex="-1"></a>              ): </span>
+<span id="cb206-5"><a href="#cb206-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
+<span id="cb206-6"><a href="#cb206-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
+<span id="cb206-7"><a href="#cb206-7" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
+<span id="cb206-8"><a href="#cb206-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb206-9"><a href="#cb206-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines) <span class="kw">and</span> dbsrc <span class="op">==</span> <span class="va">False</span>: <span class="co"># to print out the source code and mark all the srclines </span></span>
+<span id="cb206-10"><a href="#cb206-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb206-11"><a href="#cb206-11" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">0</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb206-12"><a href="#cb206-12" aria-hidden="true" tabindex="-1"></a>            pprint(i[<span class="dv">0</span>][<span class="dv">1</span>], width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb206-13"><a href="#cb206-13" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb206-14"><a href="#cb206-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb206-15"><a href="#cb206-15" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb206-16"><a href="#cb206-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dbsrc <span class="kw">and</span> <span class="kw">not</span> <span class="bu">bool</span>(lines): <span class="co"># to print out the entire debuggable source code</span></span>
+<span id="cb206-17"><a href="#cb206-17" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb206-18"><a href="#cb206-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb206-19"><a href="#cb206-19" aria-hidden="true" tabindex="-1"></a>            insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>], run<span class="op">=</span><span class="va">False</span>) <span class="co"># don't exec just add up debuggable source</span></span>
+<span id="cb206-20"><a href="#cb206-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># export the debuggable source</span></span>
+<span id="cb206-21"><a href="#cb206-21" aria-hidden="true" tabindex="-1"></a>        defaults.src2dbp.delegatesdb <span class="op">=</span> defaults.deb</span>
+<span id="cb206-22"><a href="#cb206-22" aria-hidden="true" tabindex="-1"></a>        pprint(defaults.src2dbp.delegatesdb, width<span class="op">=</span><span class="dv">157</span>)</span>
+<span id="cb206-23"><a href="#cb206-23" aria-hidden="true" tabindex="-1"></a>        defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb206-24"><a href="#cb206-24" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb206-25"><a href="#cb206-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb206-26"><a href="#cb206-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb206-27"><a href="#cb206-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
+<span id="cb206-28"><a href="#cb206-28" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb206-29"><a href="#cb206-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
+<span id="cb206-30"><a href="#cb206-30" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb206-31"><a href="#cb206-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-32"><a href="#cb206-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb206-33"><a href="#cb206-33" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
+<span id="cb206-34"><a href="#cb206-34" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb206-35"><a href="#cb206-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-36"><a href="#cb206-36" aria-hidden="true" tabindex="-1"></a>    pprint(defaults.deb, width<span class="op">=</span><span class="dv">157</span>) <span class="co"># print the debuggable source</span></span>
+<span id="cb206-37"><a href="#cb206-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb206-38"><a href="#cb206-38" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb206-39"><a href="#cb206-39" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb206-40"><a href="#cb206-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <section id="improve-the-print-feature-of-dbscrlines" class="level3">
 <h3 class="anchored" data-anchor-id="improve-the-print-feature-of-dbscrlines">improve the print feature of dbscrlines</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dbsrclines(srcname:<span class="bu">str</span>, <span class="co"># name of the source code, e.g., delegates</span></span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>               lines:<span class="bu">list</span> <span class="op">=</span> <span class="va">None</span>, <span class="co"># if None then print all e.g., defaults.src2dbp.delegates</span></span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>               dbsrc:<span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span> <span class="co"># get the full debuggable source code</span></span>
+<span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a>              ): </span>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Doing one line or multilines of insert2debug on source code with dbprints."</span></span>
+<span id="cb207-6"><a href="#cb207-6" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"defaults.src2dbp."</span> <span class="op">+</span> srcname)</span>
+<span id="cb207-7"><a href="#cb207-7" aria-hidden="true" tabindex="-1"></a>    srcdblist <span class="op">=</span> L(srcdblist)</span>
+<span id="cb207-8"><a href="#cb207-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb207-9"><a href="#cb207-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">bool</span>(lines) <span class="kw">and</span> dbsrc <span class="op">==</span> <span class="va">False</span>: <span class="co"># to print out the source code and mark all the srclines </span></span>
+<span id="cb207-10"><a href="#cb207-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># put all srclines into a single string</span></span>
+<span id="cb207-11"><a href="#cb207-11" aria-hidden="true" tabindex="-1"></a>        srclines <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb207-12"><a href="#cb207-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb207-13"><a href="#cb207-13" aria-hidden="true" tabindex="-1"></a>            srclines <span class="op">=</span> srclines <span class="op">+</span> i[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb207-14"><a href="#cb207-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb207-15"><a href="#cb207-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> l <span class="kw">in</span> defaults.src.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>):</span>
+<span id="cb207-16"><a href="#cb207-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> l <span class="kw">in</span> srclines:</span>
+<span id="cb207-17"><a href="#cb207-17" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'</span><span class="sc">{:=&lt;157}</span><span class="st">'</span>.<span class="bu">format</span>(l))</span>
+<span id="cb207-18"><a href="#cb207-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>: </span>
+<span id="cb207-19"><a href="#cb207-19" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'</span><span class="sc">{:&lt;157}</span><span class="st">'</span>.<span class="bu">format</span>(l))</span>
+<span id="cb207-20"><a href="#cb207-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb207-21"><a href="#cb207-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb207-22"><a href="#cb207-22" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb207-23"><a href="#cb207-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dbsrc <span class="kw">and</span> <span class="kw">not</span> <span class="bu">bool</span>(lines): <span class="co"># set dbsrc to true to export the entire debuggable source code to defaults.src2dbp.delegatesdb</span></span>
+<span id="cb207-24"><a href="#cb207-24" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb207-25"><a href="#cb207-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> srcdblist:</span>
+<span id="cb207-26"><a href="#cb207-26" aria-hidden="true" tabindex="-1"></a>            insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>], run<span class="op">=</span><span class="va">False</span>) <span class="co"># don't exec just add up debuggable source</span></span>
+<span id="cb207-27"><a href="#cb207-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># export the debuggable source</span></span>
+<span id="cb207-28"><a href="#cb207-28" aria-hidden="true" tabindex="-1"></a>        defaults.src2dbp.delegatesdb <span class="op">=</span> defaults.deb</span>
+<span id="cb207-29"><a href="#cb207-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># pprint(defaults.src2dbp.delegatesdb, width=157)</span></span>
+<span id="cb207-30"><a href="#cb207-30" aria-hidden="true" tabindex="-1"></a>        defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb207-31"><a href="#cb207-31" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb207-32"><a href="#cb207-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb207-33"><a href="#cb207-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb207-34"><a href="#cb207-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(lines) <span class="op">&gt;</span> <span class="dv">1</span>: </span>
+<span id="cb207-35"><a href="#cb207-35" aria-hidden="true" tabindex="-1"></a>        defaults.multi <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb207-36"><a href="#cb207-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines)):</span>
+<span id="cb207-37"><a href="#cb207-37" aria-hidden="true" tabindex="-1"></a>            delegates <span class="op">=</span> insert2debug(srcname, i[<span class="dv">0</span>][<span class="dv">0</span>], i[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb207-38"><a href="#cb207-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-39"><a href="#cb207-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: </span>
+<span id="cb207-40"><a href="#cb207-40" aria-hidden="true" tabindex="-1"></a>        item <span class="op">=</span> <span class="bu">eval</span>(<span class="st">"srcdblist"</span> <span class="op">+</span> <span class="bu">str</span>(lines))</span>
+<span id="cb207-41"><a href="#cb207-41" aria-hidden="true" tabindex="-1"></a>        delegates <span class="op">=</span> insert2debug(srcname, item[<span class="dv">0</span>][<span class="dv">0</span>], item[<span class="dv">0</span>][<span class="dv">1</span>])</span>
+<span id="cb207-42"><a href="#cb207-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-43"><a href="#cb207-43" aria-hidden="true" tabindex="-1"></a>    pprint(defaults.deb, width<span class="op">=</span><span class="dv">157</span>) <span class="co"># print the debuggable source</span></span>
+<span id="cb207-44"><a href="#cb207-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-45"><a href="#cb207-45" aria-hidden="true" tabindex="-1"></a>    defaults.multi <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb207-46"><a href="#cb207-46" aria-hidden="true" tabindex="-1"></a>    defaults.deb <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb207-47"><a href="#cb207-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> delegates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="add-return-to-the-last-dbcode-for-debugging-examples-which-cause-errors" class="level3">
+<h3 class="anchored" data-anchor-id="add-return-to-the-last-dbcode-for-debugging-examples-which-cause-errors">add return to the last dbcode for debugging examples which cause errors</h3>
 <hr>
 </section>
 <section id="dbsrclines" class="level3">
 <h3 class="anchored" data-anchor-id="dbsrclines">dbsrclines</h3>
 <blockquote class="blockquote">
-<pre><code> dbsrclines (srcname:str, lines:list=None, dbsrc:bool=False)</code></pre>
+<pre><code> dbsrclines (srcname:str, lines:list=None, dbsrc:bool=False,
+             retn:bool=False)</code></pre>
 </blockquote>
 <p>Doing one line or multilines of insert2debug on source code with dbprints.</p>
 <table class="table">
@@ -4055,13 +4171,19 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <td>False</td>
 <td>get the full debuggable source code</td>
 </tr>
+<tr class="even">
+<td>retn</td>
+<td>bool</td>
+<td>False</td>
+<td>choose to add return None after the last dbcode</td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="check-official-source-against-debuggable-source" class="level3">
-<h3 class="anchored" data-anchor-id="check-official-source-against-debuggable-source">check official source against debuggable source</h3>
-<hr>
 </section>
+<section id="check-official-source-against-debuggable-source" class="level2">
+<h2 class="anchored" data-anchor-id="check-official-source-against-debuggable-source">check official source against debuggable source</h2>
+<hr>
 <section id="checksrc" class="level3">
 <h3 class="anchored" data-anchor-id="checksrc">checksrc</h3>
 <blockquote class="blockquote">
@@ -4083,13 +4205,111 @@ a = 5 != 4 =&gt; a: True</code></pre>
 <pre><code> alignright (blocks)</code></pre>
 </blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"this is me"</span>)</span>
-<span id="cb210-2"><a href="#cb210-2" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"</span><span class="ch">\x1b</span><span class="st">[91mthis is me</span><span class="ch">\x1b</span><span class="st">[0m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb212-1"><a href="#cb212-1" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"this is me"</span>)</span>
+<span id="cb212-2"><a href="#cb212-2" aria-hidden="true" tabindex="-1"></a>alignright(<span class="st">"</span><span class="ch">\x1b</span><span class="st">[91mthis is me</span><span class="ch">\x1b</span><span class="st">[0m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                                                                                                   this is me
                                                                                                                                                    this is me</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="how-to-shuffle" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-shuffle">How to shuffle</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a>src <span class="op">=</span> <span class="st">"    def low(a, b=1):</span><span class="ch">\n</span><span class="st">        c = b*2</span><span class="ch">\n</span><span class="st">        return a + b + c"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l <span class="kw">in</span> src.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>): <span class="bu">print</span>(l)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    def low(a, b=1):
+        c = b*2
+        return a + b + c</code></pre>
+</div>
+</div>
+<p>I have a list of tuples, and the first item of each tuple contains a line of the function above. The problem is the order of the lines are random.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a>srcshuffled <span class="op">=</span> [[(<span class="st">"        return a + b + c"</span>, <span class="st">"this is the end of the func"</span>)],[(<span class="st">"        c = b*2"</span>, <span class="st">"first line inside the func"</span>)],[(<span class="st">"    def low(a, b=1):"</span>, <span class="st">"this is where signature is"</span>)]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> srcshuffled:</span>
+<span id="cb218-2"><a href="#cb218-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s[<span class="dv">0</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        return a + b + c
+        c = b*2
+    def low(a, b=1):</code></pre>
+</div>
+</div>
+<p>How can I reorder the list so that the first item of each tuple matches the function in the right order?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a>srcorrect <span class="op">=</span> [[(<span class="st">"    def low(a, b=1):"</span>, <span class="st">"this is where signature is"</span>)],[(<span class="st">"        c = b*2"</span>, <span class="st">"first line inside the func"</span>)], [(<span class="st">"        return a + b + c"</span>, <span class="st">"this is the end of the func"</span>)]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb221-1"><a href="#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> srcorrect:</span>
+<span id="cb221-2"><a href="#cb221-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s[<span class="dv">0</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    def low(a, b=1):
+        c = b*2
+        return a + b + c</code></pre>
+</div>
+</div>
+<p>my attempt</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, l <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(<span class="bu">len</span>(src.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>))), src.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)):</span>
+<span id="cb223-2"><a href="#cb223-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(idx)</span>
+<span id="cb223-3"><a href="#cb223-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(l)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0
+    def low(a, b=1):
+1
+        c = b*2
+2
+        return a + b + c</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a>srcorrect1 <span class="op">=</span> []</span>
+<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> l <span class="kw">in</span> src.split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>):</span>
+<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> srcshuffled: </span>
+<span id="cb225-4"><a href="#cb225-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> l.strip() <span class="kw">in</span> s[<span class="dv">0</span>][<span class="dv">0</span>]:</span>
+<span id="cb225-5"><a href="#cb225-5" aria-hidden="true" tabindex="-1"></a>            srcorrect1.append(s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> srcorrect1:</span>
+<span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s[<span class="dv">0</span>][<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    def low(a, b=1):
+        c = b*2
+        return a + b + c</code></pre>
+</div>
+</div>
+<hr>
+<section id="matchsrcorder" class="level3">
+<h3 class="anchored" data-anchor-id="matchsrcorder">matchsrcorder</h3>
+<blockquote class="blockquote">
+<pre><code> matchsrcorder (srcdbps:list)</code></pre>
+</blockquote>
+<table class="table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 38%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>srcdbps</td>
+<td>list</td>
+<td>the list contain all srclines and their dbcodes with random order</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
