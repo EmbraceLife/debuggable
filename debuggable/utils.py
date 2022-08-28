@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['defaults', 'whatinside', 'whichversion', 'checksource', 'alignright', 'dbcolors', 'colorize', 'dbprint',
-           'insert2debug', 'dbsrclines', 'checksrc', 'strip_ansi', 'matchsrcorder', 'displaysrc']
+           'insert2debug', 'dbsrclines', 'displaysavedbsrc', 'checksrc', 'strip_ansi', 'matchsrcorder', 'displaysrc']
 
 # %% ../utils.ipynb 3
 from inspect import getmembers, isfunction, isclass, isbuiltin, getsource
@@ -89,6 +89,7 @@ def checksource():
 defaults = type('defaults', (object,), {'block': False, # whether inside a block of code investigation or not
                                      'src': None, # store the source code of the functiong being debugged
                                      'deb': None, # store the debuggable source code
+                                     'debp': None, # store the debuggable source code for color printing
                                      'name': None, # the name of the func to be debugged
                                      'startsrc': None, # a piece of str in the starting line of the src code
                                      'endsrc': None, # a piece of str in the ending line of the src code
@@ -312,7 +313,7 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 164
+# %% ../utils.ipynb 168
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
@@ -324,21 +325,31 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     # defaults.multi default to False, unless set True, defaults.deb is default to None before debugging srcode
     if defaults.multi and bool(defaults.deb): 
         srcode = defaults.deb
+        srcodep = defaults.debp
+        lstxtp = srcodep.split(srcline.strip()) # make sure the split is done properly
     else: 
         # srcode = inspect.getsource(eval(name, globals().update(env)))
         srcode = defaults.src
+        
     lstxt = srcode.split(srcline)
+    
+    
     retn = "" 
     if dberror: 
         retn = retn + "\n        return None\n" #  to exit the function, "" to continue on
 
-
-    insert = colorize(dbcode, "g") + colorize(srcline, "r") + colorize(retn, "y")
-    src2print = lstxt[0] + insert + lstxt[1]
+    
+    insert = colorize(dbcode, "g") + colorize(retn, "y") + colorize(srcline, "r") 
+    if bool(defaults.deb):
+        src2print = lstxtp[0] + insert + lstxtp[1]
+    else:
+        src2print = lstxt[0] + insert + lstxt[1]
             
     src2db = lstxt[0] + dbcode + retn + srcline + lstxt[1] # make sure return is before srcline and after dbcode
-    # if defaults.multi: defaults.deb = src2db
+    # save the entire source code with dbprints
     defaults.deb = src2db
+    # save the entire source code with dbprints for color printing
+    defaults.debp = src2print
     
     # to exec 
     if run: 
@@ -349,10 +360,10 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     else: 
         return None
 
-# %% ../utils.ipynb 166
+# %% ../utils.ipynb 171
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 175
+# %% ../utils.ipynb 181
 def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
                dbsrc:bool = False, # get the full debuggable source code
                retn:bool = False # choose to add return None after the last dbcode
@@ -361,31 +372,6 @@ def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2db
     srcname = defaults.name
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
-    
-    if not bool(lines) and dbsrc == False: # to print out the source code and mark all the srclines 
-        # put all srclines into a single string
-        srclines = ""
-        for i in srcdblist:
-            srclines = srclines + i[0][0]
-        
-        for l in defaults.src.split("\n"):
-            if l in srclines:
-                print('{:=<157}'.format(l))
-            else: 
-                print('{:<157}'.format(l))
-        print("")
-        return None
-     
-    if dbsrc and not bool(lines): # set dbsrc to true to export the entire debuggable source code to defaults.src2dbp.delegatesdb
-        defaults.multi = True
-        for i in srcdblist:
-            insert2debug(srcname, i[0][0], i[0][1], run=False) # don't exec just add up debuggable source
-        # export the debuggable source
-        defaults.src2dbp.delegatesdb = defaults.deb
-        # pprint(defaults.src2dbp.delegatesdb, width=157)
-        defaults.deb = None
-        defaults.multi = False
-        return None
     
     if len(lines) > 1: 
         defaults.multi = True
@@ -398,15 +384,48 @@ def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2db
 
     else: 
         item = eval("srcdblist" + str(lines))
-        delegates = insert2debug(srcname, item[0][0], item[0][1])
+        if retn:
+            delegates = insert2debug(srcname, item[0][0], item[0][1], dberror=True)  ### add dberror to insert2debug           
+        else:
+            delegates = insert2debug(srcname, item[0][0], item[0][1])
 
-    pprint(defaults.deb, width=157) # print the debuggable source
+    # print out the colored dbsrc selected
+    for l in defaults.debp.split("\n"):
+        print(l)
 
     defaults.multi = False
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 181
+# %% ../utils.ipynb 185
+def displaysavedbsrc():
+    "Doing one line or multilines of insert2debug on source code with dbprints."
+    srcname = defaults.name
+    srcdblist = eval("defaults.src2dbp." + srcname)
+    srcdblist = L(srcdblist)
+     
+    
+    defaults.multi = True
+    for i in srcdblist:
+        insert2debug(srcname, i[0][0], i[0][1], run=False) # don't exec, just add up debuggable source
+        
+    # export the debuggable source
+    # defaults.src2dbp.delegatesdb = defaults.deb
+    exec(f'defaults.src2dbp.{srcname}db = defaults.deb')
+    # pprint(defaults.src2dbp.delegatesdb, width=157)
+    dbsrclines = ""
+    for l in srcdblist:
+        dbsrclines = dbsrclines + l[0][0]
+    for l in defaults.deb.split('\n'):
+        if l.strip() in dbsrclines:
+            print(colorize(l, 'g'))
+        else:
+            print(l)
+    defaults.deb = None
+    defaults.multi = False
+    return None
+
+# %% ../utils.ipynb 191
 def checksrc():
     "check src code against dbsource. Also the latest srcode is stored inside defaults.src."
     srcname = defaults.name
@@ -433,11 +452,11 @@ def checksrc():
     if count > 0: 
         raise Exception(f'{srcname} has updated on {count} lines, you need to update your debuggable codes too.')
 
-# %% ../utils.ipynb 182
+# %% ../utils.ipynb 192
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 183
+# %% ../utils.ipynb 193
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -445,7 +464,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 198
+# %% ../utils.ipynb 208
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
@@ -456,7 +475,7 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps1.append(s)  
     return srcdbps1
 
-# %% ../utils.ipynb 206
+# %% ../utils.ipynb 216
 def displaysrc():
     "display the official source code also marking the debuggable srclines"
     srcname = defaults.name # name of src code like delegates
