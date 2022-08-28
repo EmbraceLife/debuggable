@@ -406,32 +406,38 @@ def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2db
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 178
+# %% ../utils.ipynb 181
 def checksrc():
     "check src code against dbsource. Also the latest srcode is stored inside defaults.src."
     srcname = defaults.name
     defaults.src = inspect.getsource(eval(srcname))
 
-    # file1 = open("db/" + srcname + ".txt","r+") 
-
     # now dbsrc == defaults.src2dbp.delegatesdb
     dbsrc = eval("defaults.src2dbp." + srcname + "db")
-    # dbsrc = file1.read()
-    # file1.close()
+    count = 0
 
     lst = defaults.src.split('\n')
     for l in lst: 
-
-        if bool(dbsrc) and l.strip() in dbsrc:
-            print('{:<157}'.format(l))
+        if not bool(dbsrc):
+            print(l)
+        elif bool(dbsrc) and l.strip() in dbsrc:
+            tick = f'(\u2713)'
+            indent = defaults.margin - len(l) - len(tick)
+            print(l + " "*indent + tick)    
         else: 
             print('{:=<157}'.format(l))
+            count = count + 1
+            
+    if bool(dbsrc) == False: 
+        print(f'your debuggable srcode is empty. You have not written any, or you have lost your defaults.src2dbp.{srcname}db or db/{srcname}db file.')
+    if count > 0: 
+        raise Exception(f'{srcname} has updated on {count} lines, you need to update your debuggable codes too.')
 
-# %% ../utils.ipynb 179
+# %% ../utils.ipynb 182
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 180
+# %% ../utils.ipynb 183
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -439,7 +445,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 195
+# %% ../utils.ipynb 198
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
@@ -450,8 +456,9 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps1.append(s)  
     return srcdbps1
 
-# %% ../utils.ipynb 199
+# %% ../utils.ipynb 206
 def displaysrc():
+    "display the official source code also marking the debuggable srclines"
     srcname = defaults.name # name of src code like delegates
     startsrc = defaults.startsrc # a piece of code like "if to is None"
     endsrc = defaults.endsrc # a piece of code like "from_f.__annotations__.update(anno)"
@@ -459,21 +466,29 @@ def displaysrc():
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
     
-    srclines = "" # store all the debuggable srclines here
-    for i in srcdblist:
-        srclines = srclines + i[0][0]
-    
     idx = 0
     mark = False
+    passl = False
     for l in defaults.src.split("\n"):
 
         # to mark the index for the targed src codes
         if startsrc in l: mark = True
         if mark:
-            if l in srclines:
-                marker = f'( {idx} )' + "====="
-            else:
-                marker = f'( {idx} )' + "     "
+            marker = f'( {idx} )' + "     "
+            for idxi, i in zip(range(len(srcdblist)), srcdblist):
+
+                if l.strip() in i[0][0]:
+
+                    marker = f'( {idx} )' + f'=={idxi}=='
+                    indent = defaults.margin - len(l) - len(marker)
+                    print(l + "="*indent + marker)
+                    passl = True
+                    continue # jump out of the inner for loop
+
+            if passl: # make sure to jump out of the outer for loop
+                passl = False
+                idx = idx + 1 # keep track idx for every srcline to be debugged
+                continue
             indent = defaults.margin - len(l) - len(marker)
             print(l + " "*indent + marker)
             idx = idx + 1
