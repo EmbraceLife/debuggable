@@ -98,6 +98,8 @@ defaults = type('defaults', (object,), {'block': False, # whether inside a block
                                      'multi': False, # debugging multiline source codes
                                      'src2dbp': type('fastcore.meta', (object,), {'delegates': [], # a list of lists of (srcline, dbcode) 
                                                                                   'delegatesdb': None, # the debuggable source
+                                                                                  'FixSigMeta': [], # a list of lists of (srcline, dbcode) 
+                                                                                  'FixSigMetadb': None, # the debuggable source
                                                                                  }) # store a list of (srcline, dbcode)
                                     }) 
 
@@ -425,12 +427,24 @@ def displaysavedbsrc():
     defaults.multi = False
     return None
 
-# %% ../utils.ipynb 191
+# %% ../utils.ipynb 192
+from os.path import exists
+import pickle
+
+# %% ../utils.ipynb 194
 def checksrc():
-    "check src code against dbsource. Also the latest srcode is stored inside defaults.src."
+    "check src code against dbsource. Behind the scene, we are loading defaults.src2dbp.{srcname}db from pickle file \
+    and the latest official srcode is stored inside defaults.src."
     srcname = defaults.name
     defaults.src = inspect.getsource(eval(srcname))
 
+    if exists(f"db/{srcname}db"):
+    # setup the folder and file when getting started. 
+        with open(f"db/{srcname}db", "rb") as fp:   
+          exec(f"defaults.src2dbp.{srcname}db = pickle.load(fp)")
+    else:
+        pass
+    
     # now dbsrc == defaults.src2dbp.delegatesdb
     dbsrc = eval("defaults.src2dbp." + srcname + "db")
     count = 0
@@ -452,11 +466,11 @@ def checksrc():
     if count > 0: 
         raise Exception(f'{srcname} has updated on {count} lines, you need to update your debuggable codes too.')
 
-# %% ../utils.ipynb 192
+# %% ../utils.ipynb 195
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 193
+# %% ../utils.ipynb 196
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -464,7 +478,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 208
+# %% ../utils.ipynb 211
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
@@ -475,7 +489,7 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps1.append(s)  
     return srcdbps1
 
-# %% ../utils.ipynb 216
+# %% ../utils.ipynb 219
 def displaysrc():
     "display the official source code also marking the debuggable srclines"
     srcname = defaults.name # name of src code like delegates
