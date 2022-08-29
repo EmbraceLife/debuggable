@@ -439,7 +439,6 @@ def checksrc():
     defaults.src = inspect.getsource(eval(srcname))
 
     if exists(f"db/{srcname}db"):
-    # setup the folder and file when getting started. 
         with open(f"db/{srcname}db", "rb") as fp:   
           exec(f"defaults.src2dbp.{srcname}db = pickle.load(fp)")
     else:
@@ -489,12 +488,26 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps1.append(s)  
     return srcdbps1
 
-# %% ../utils.ipynb 219
+# %% ../utils.ipynb 221
+from pathlib import Path
+
+# %% ../utils.ipynb 224
 def displaysrc():
-    "display the official source code also marking the debuggable srclines"
+    "display the official source code also marking the debuggable srclines with dbsrc True. behind the scene, loading defaults.src2dbp.{srcname} is loaded from a pickle file if available."
     srcname = defaults.name # name of src code like delegates
     startsrc = defaults.startsrc # a piece of code like "if to is None"
     endsrc = defaults.endsrc # a piece of code like "from_f.__annotations__.update(anno)"
+    
+    
+    path = Path(f"db/{srcname}")
+
+    
+    if path.is_file():
+        with open(f"db/{srcname}", "rb") as fp:   # Unpickling
+            exec(f"defaults.src2dbp.{srcname} = pickle.load(fp)")
+    else:
+        pass
+
     
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
