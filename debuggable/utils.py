@@ -399,9 +399,9 @@ def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2db
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 185
+# %% ../utils.ipynb 186
 def displaysavedbsrc():
-    "Doing one line or multilines of insert2debug on source code with dbprints."
+    "save the entire debuggable source code in defaults.src2dbp.{srcname}db and display it with color"
     srcname = defaults.name
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
@@ -425,23 +425,53 @@ def displaysavedbsrc():
             print(l)
     defaults.deb = None
     defaults.multi = False
+    
     return None
 
-# %% ../utils.ipynb 192
+# %% ../utils.ipynb 188
+def _save_dbsrcstr_dbcodelist():
+    
+    path = Path(f"db/{defaults.name}")
+
+    if path.is_file():
+        with open(f"db/{defaults.name}", "wb") as fp:   # Unpickling
+            eval(f'pickle.dump(defaults.src2dbp.{defaults.name}, fp)')
+    else:
+        print(f"Warning: there is no such file named db/{defaults.name}.")
+        pass
+
+    path = Path(f"db/{defaults.name}db")
+    if path.is_file():
+        with open(f"db/{defaults.name}db", "wb") as fp:   # Unpickling
+            eval(f'pickle.dump(defaults.src2dbp.{defaults.name}db, fp)')
+    else:
+        print(f"Warning: there is no such file named db/{defaults.name}db.")
+        pass
+
+
+# %% ../utils.ipynb 196
 from os.path import exists
 import pickle
 
-# %% ../utils.ipynb 194
+# %% ../utils.ipynb 198
 def checksrc():
     "check src code against dbsource. Behind the scene, we are loading defaults.src2dbp.{srcname}db from pickle file \
     and the latest official srcode is stored inside defaults.src."
     srcname = defaults.name
     defaults.src = inspect.getsource(eval(srcname))
 
-    if exists(f"db/{srcname}db"):
-        with open(f"db/{srcname}db", "rb") as fp:   
-          exec(f"defaults.src2dbp.{srcname}db = pickle.load(fp)")
+    # if exists(f"db/{srcname}db"):
+    #     with open(f"db/{srcname}db", "rb") as fp:   
+    #       exec(f"defaults.src2dbp.{srcname}db = pickle.load(fp)")
+    # else:
+    #     pass
+    
+    path = Path(f"db/{srcname}db")
+    if path.is_file():
+        with open(f"db/{srcname}db", "rb") as fp:   # Unpickling
+            exec(f"defaults.src2dbp.{srcname}db = pickle.load(fp)")
     else:
+        print(f"Warning: there is no such file named db/{srcname}db, so defaults.src2dbp.{srcname}db is empty.")
         pass
     
     # now dbsrc == defaults.src2dbp.delegatesdb
@@ -465,11 +495,11 @@ def checksrc():
     if count > 0: 
         raise Exception(f'{srcname} has updated on {count} lines, you need to update your debuggable codes too.')
 
-# %% ../utils.ipynb 195
+# %% ../utils.ipynb 199
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 196
+# %% ../utils.ipynb 200
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -477,7 +507,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 211
+# %% ../utils.ipynb 215
 def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes with random order
                  ):
     srcdbps1 = [] # a list to store the correct order of srclines and dbcodes
@@ -488,12 +518,12 @@ def matchsrcorder(srcdbps:list # the list contain all srclines and their dbcodes
                 srcdbps1.append(s)  
     return srcdbps1
 
-# %% ../utils.ipynb 221
+# %% ../utils.ipynb 225
 from pathlib import Path
 
-# %% ../utils.ipynb 224
+# %% ../utils.ipynb 228
 def displaysrc():
-    "display the official source code also marking the debuggable srclines with dbsrc True. behind the scene, loading defaults.src2dbp.{srcname} is loaded from a pickle file if available."
+    "display the official source code also marking the debuggable srclines. behind the scene, loading defaults.src2dbp.{srcname} is loaded from a pickle file if available."
     srcname = defaults.name # name of src code like delegates
     startsrc = defaults.startsrc # a piece of code like "if to is None"
     endsrc = defaults.endsrc # a piece of code like "from_f.__annotations__.update(anno)"
@@ -506,6 +536,7 @@ def displaysrc():
         with open(f"db/{srcname}", "rb") as fp:   # Unpickling
             exec(f"defaults.src2dbp.{srcname} = pickle.load(fp)")
     else:
+        print(f"Warning: there is no such file named db/{srcname}, so defaults.src2dbp.{srcname} is empty.")
         pass
 
     
