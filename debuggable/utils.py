@@ -86,6 +86,9 @@ def checksource():
     defaults.deb = None # make sure defaults.deb set to None for later debugging srcode.
 
 # %% ../utils.ipynb 97
+from inspect import _signature_from_callable
+
+# %% ../utils.ipynb 98
 defaults = type('defaults', (object,), {'block': False, # whether inside a block of code investigation or not
                                      'src': None, # store the source code of the functiong being debugged
                                      'deb': None, # store the debuggable source code
@@ -101,10 +104,12 @@ defaults = type('defaults', (object,), {'block': False, # whether inside a block
                                                                                   'delegatesdb': None, # the debuggable source
                                                                                   'FixSigMeta': [], # a list of lists of (srcline, dbcode) 
                                                                                   'FixSigMetadb': None, # the debuggable source
+                                                                                  '_signature_from_callable': [], # a list of lists of (srcline, dbcode) 
+                                                                                  '_signature_from_callabledb': None, # the debuggable source
                                                                                  }) # store a list of (srcline, dbcode)
                                     }) 
 
-# %% ../utils.ipynb 142
+# %% ../utils.ipynb 143
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(l) , lst ))
@@ -112,14 +117,14 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 147
+# %% ../utils.ipynb 148
 class dbcolors:
     g = '\033[92m' #GREEN
     y = '\033[93m' #YELLOW
     r = '\033[91m' #RED
     reset = '\033[0m' #RESET COLOR
 
-# %% ../utils.ipynb 148
+# %% ../utils.ipynb 149
 def colorize(cmt, color:str=None):
     if color == "g":
         return dbcolors.g + cmt + dbcolors.reset
@@ -130,7 +135,7 @@ def colorize(cmt, color:str=None):
     else: 
         return cmt
 
-# %% ../utils.ipynb 154
+# %% ../utils.ipynb 155
 def dbprint(src:str, # the source to debug in str
             cmt:str,
             *code,   # a number of codes to run, each code is in str, e.g., "a + b", "c = a - b"
@@ -316,7 +321,7 @@ def dbprint(src:str, # the source to debug in str
         # the benefit of using global().update(env) is 
         # to ensure we don't need to include the same env for the second time
 
-# %% ../utils.ipynb 168
+# %% ../utils.ipynb 169
 def insert2debug(name:str, # name of a function to debug, e.g., delegates
                  srcline:str, # e.g., "        if hasattr(from_f,'__delwrap__'): return f"
                  dbcode:str,  # str, e.g., "dbprint(...)"
@@ -363,15 +368,20 @@ def insert2debug(name:str, # name of a function to debug, e.g., delegates
     else: 
         return None
 
-# %% ../utils.ipynb 171
+# %% ../utils.ipynb 172
 from fastcore.foundation import L
 
-# %% ../utils.ipynb 183
+# %% ../utils.ipynb 184
 def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2dbp.delegates
                dbsrc:bool = False, # get the full debuggable source code
                retn:bool = False # choose to add return None after the last dbcode
               ): 
     "Doing one line or multilines of insert2debug on source code with dbprints."
+    
+    # display the entire debuggable source code, and save defaults.src2dbp.{srcname}db and defaults.src2dbp.{srcname} in pickle files.
+    displaysavedbsrc(display=False)
+    
+    
     srcname = defaults.name
     srcdblist = eval("defaults.src2dbp." + srcname)
     srcdblist = L(srcdblist)
@@ -400,7 +410,7 @@ def dbsrclines(lines:list = None, # if None then print all e.g., defaults.src2db
     defaults.deb = None
     return delegates
 
-# %% ../utils.ipynb 189
+# %% ../utils.ipynb 190
 def displaysavedbsrc(display:bool=True):
     "display the entire debuggable source code, and save defaults.src2dbp.{srcname}db and defaults.src2dbp.{srcname} in pickle files."
     
@@ -437,7 +447,7 @@ def displaysavedbsrc(display:bool=True):
     
     return None
 
-# %% ../utils.ipynb 191
+# %% ../utils.ipynb 192
 def _save_dbsrcstr_dbcodelist():
     
     path = Path(f"db/{defaults.name}")
@@ -458,11 +468,11 @@ def _save_dbsrcstr_dbcodelist():
         pass
 
 
-# %% ../utils.ipynb 199
+# %% ../utils.ipynb 200
 from os.path import exists
 import pickle
 
-# %% ../utils.ipynb 201
+# %% ../utils.ipynb 202
 def checksrc():
     "check src code against dbsource. Behind the scene, we are loading defaults.src2dbp.{srcname}db from pickle file \
     and the latest official srcode is stored inside defaults.src."
@@ -504,11 +514,11 @@ def checksrc():
     if count > 0: 
         raise Exception(f'{srcname} has updated on {count} lines, you need to update your debuggable codes too.')
 
-# %% ../utils.ipynb 202
+# %% ../utils.ipynb 203
 def strip_ansi(source):
     return re.sub(r'\033\[(\d|;)+?m', '', source)
 
-# %% ../utils.ipynb 203
+# %% ../utils.ipynb 204
 def alignright(blocks):
     lst = blocks.split('\n')
     maxlen = max(map(lambda l : len(strip_ansi(l)) , lst ))
@@ -516,7 +526,7 @@ def alignright(blocks):
     for l in lst:
         print(' '*indent + format(l))
 
-# %% ../utils.ipynb 239
+# %% ../utils.ipynb 240
 def matchsrcorder():
     "Match srcdbps list in the same order as the official source code."
     srcdbps = defaults.srcdbps
@@ -530,10 +540,10 @@ def matchsrcorder():
     defaults.src2dbp.delegates = srcdbps1
     return srcdbps1
 
-# %% ../utils.ipynb 251
+# %% ../utils.ipynb 252
 from pathlib import Path
 
-# %% ../utils.ipynb 254
+# %% ../utils.ipynb 255
 def displaysrc():
     "display the official source code also marking the debuggable srclines. behind the scene, loading defaults.src2dbp.{srcname} is loaded from a pickle file if available."
     srcname = defaults.name # name of src code like delegates
